@@ -65,11 +65,10 @@ class Controller(polyinterface.Controller):
 class SenseDetectedDevice(polyinterface.Node):
 
     def __init__(self, controller, primary, address, name):
-        super(AuroraNode, self).__init__(controller, primary, address, name)
+        super(SenseDetectedDevice, self).__init__(controller, primary, address, name)
         self.do_poll = True
         self.timeout = 5.0
-        
-        self.my_aurora = SenseDetectedDevice(self.parent.nano_ip,self.parent.nano_token)
+       
         self.query()
 
     def start(self):
