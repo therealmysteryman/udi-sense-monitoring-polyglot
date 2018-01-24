@@ -27,12 +27,30 @@ class Controller(polyinterface.Controller):
         self.name = 'Sense'
         self.initialized = False
         self.tries = 0
-        self.requestNewToken = 0
+        self.email = None
+        self.password = None
         
     def start(self):
         LOGGER.info('Started Sense NodeServer version %s', str(VERSION))
         try:
+            
+            self.setDriver('ST', 0)
+            if 'email' in self.polyConfig['customParams'] and self.email is None:
+                self.email = self.polyConfig['customParams']['email']
+                LOGGER.info('Custom Email address specified: {}'.format(self.email))
+            else:
+                LOGGER.error('Please provide email address in custom parameters')
+                return false
+            
+            if 'password' in self.polyConfig['customParams'] and self.password is None:
+                self.password = self.polyConfig['customParams']['password']
+                LOGGER.info('Password specified')
+            else
+                LOGGER.error('Please provide password in custom parameters')
+                return false
+            
             self.setDriver('ST', 1)
+            self.discover()
                                                             
         except Exception as ex:
             LOGGER.error('Error starting Sense NodeServer: %s', str(ex))
