@@ -1,21 +1,21 @@
 {
-    "name": "NanoLeaf",
-    "docs": "https://github.com/therealmysteryman/udi-nanoleaf-polyglot",
+    "name": "Sense Energy Monitoring",
+    "docs": "https://github.com/therealmysteryman/udi-sense-monitoring-polyglot",
     "type": "python3",
-    "executable": "nanoleaf_poly.py",
+    "executable": "sense_poly.py",
     "install": "install.sh",
     "shortPoll": "15",
     "longPoll": "60",
-    "description": "Connect Nanoleaf to the ISY994.",
-    "notice": "https://github.com/therealmysteryman/udi-nanoleaf-polyglot/blob/master/LICENSE",
+    "description": "Sense Monitoring Polyglot v2 Node Server for UDI ISY 994i.",
+    "notice": "https://github.com/therealmysteryman/udi-sense-monitoring-polyglot/blob/master/LICENSE",
     "credits": [
         {
-            "title": "nanoleaf-poly: A Polyglot v2 interface to NanoLeaf",
+            "title": "nanoleaf-poly: A Polyglot v2 interface to Sense Monitoring",
             "author": "Jean-Francois Tremblay",
-            "version": "0.1.0",
-            "date": "Jan 23, 2018",
-            "source": "https://github.com/therealmysteryman/udi-nanoleaf-polyglot",
-            "license": "https://github.com/therealmysteryman/udi-nanoleaf-polyglot/blob/master/LICENSE"
+            "version": "0.0.1",
+            "date": "Jan 24, 2018",
+            "source": "https://github.com/therealmysteryman/udi-sense-monitoring-polyglot",
+            "license": "https://github.com/therealmysteryman/udi-sense-monitoring-polyglot/blob/master/LICENSE"
         },
 	{
             "title": "udi-poly-template-python: A Polyglot v2 Poly template",
@@ -26,12 +26,12 @@
             "license": "https://raw.githubusercontent.com/Einstein42/udi-poly-template-python/master/LICENSE"
         },
 	{
-            "title": "A python interface for Nanoleaf Aurora lighting",
-            "author": "Software2",
-            "version": "1.0.0",
-            "date": "August 20, 2017",
-            "source": "https://github.com/software-2/nanoleaf",
-            "license": "https://github.com/software-2/nanoleaf/blob/master/LICENSE"
+            "title": "Sense Energy Monitor API Interface [WIP]",
+            "author": "scottbonline",
+            "version": "0.0.0",
+            "date": "Jan 20, 2018",
+            "source": "https://github.com/scottbonline/sense",
+            "license": "https://github.com/scottbonline/sense/blob/stable/LICENSE.txt"
         }
     ]
 }
