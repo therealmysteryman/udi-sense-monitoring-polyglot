@@ -58,7 +58,6 @@ class Controller(polyinterface.Controller):
                                                             
         except Exception as ex:
             LOGGER.error('Error starting Sense NodeServer: %s', str(ex))
-            
             return False
 
     def shortPoll(self):
