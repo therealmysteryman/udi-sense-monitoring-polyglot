@@ -9,6 +9,7 @@ Using this Exploratory Work done from extracting Sense Monitoring Data using Pyt
 import polyinterface
 import time
 import json
+from sense-energy import Senseable
 
 LOGGER = polyinterface.LOGGER
 
@@ -29,6 +30,7 @@ class Controller(polyinterface.Controller):
         self.tries = 0
         self.email = None
         self.password = None
+        self.sense = None
         
     def start(self):
         LOGGER.info('Started Sense NodeServer version %s', str(VERSION))
@@ -45,16 +47,18 @@ class Controller(polyinterface.Controller):
             if 'password' in self.polyConfig['customParams'] and self.password is None:
                 self.password = self.polyConfig['customParams']['password']
                 LOGGER.info('Password specified')
-            else
+            else:
                 LOGGER.error('Please provide password in custom parameters')
                 return false
+            
+            self.sense =  Senseable(self.email,self.password)
             
             self.setDriver('ST', 1)
             self.discover()
                                                             
         except Exception as ex:
             LOGGER.error('Error starting Sense NodeServer: %s', str(ex))
-            self.setDriver('ST', 0)
+            
             return False
 
     def shortPoll(self):
@@ -65,20 +69,27 @@ class Controller(polyinterface.Controller):
 
     def query(self):
         # self.reportDrivers()
+        self.setDriver('CPW', self.sense.active_power)
         for node in self.nodes:
             if self.nodes[node].address != self.address and self.nodes[node].do_poll:
                 self.nodes[node].query()
         
     def discover(self, *args, **kwargs):
         time.sleep(1)
-        self.addNode(SenseDetectedDevice(self, self.address, 'myaurora', 'MyAurora'))
-
+        
+        for device in  self.sense.get_discovered_device_names():
+            if device is not None: 
+                self.addNode(SenseDetectedDevice(self, self.address, device.lower(), device))        
+            LOGGER.info(self.parent.sense.get_discovered_device_names())
+            LOGGER.info(self.sense.get_discovered_device_data())
+    
     def delete(self):
         LOGGER.info('Deleting Sense')
         
     id = 'controller'
     commands = {}
-    drivers = [{'driver': 'ST', 'value': 0, 'uom': 2}]
+    drivers = [{'driver': 'ST', 'value': 0, 'uom': 2},
+               {'driver': 'CPW', 'value': 0, 'uom': 73}]
     
 class SenseDetectedDevice(polyinterface.Node):
 
@@ -86,7 +97,6 @@ class SenseDetectedDevice(polyinterface.Node):
         super(SenseDetectedDevice, self).__init__(controller, primary, address, name)
         self.do_poll = True
         self.timeout = 5.0
-       
         self.query()
 
     def start(self):
@@ -96,8 +106,7 @@ class SenseDetectedDevice(polyinterface.Node):
         self.reportDrivers()
 
     drivers = [{'driver': 'ST', 'value': 0, 'uom': 78},
-               {'driver': 'GV3', 'value': 0, 'uom': 51},
-               {'driver': 'GV4', 'value': 1, 'uom': 25}]
+               {'driver': 'CPW', 'value': 0, 'uom': 73}]
     
     id = 'SENSE_DEVICE'
     commands = {
