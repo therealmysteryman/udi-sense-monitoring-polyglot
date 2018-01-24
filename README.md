@@ -12,7 +12,7 @@ You can install it manually running
 1. cd ~/.polyglot/nodeservers
 2. git clone https://github.com/therealmysteryman/udi-sense-monitoring-polyglot.git
 3. run ./install.sh to install the required dependency.
-3. Create a customs variables email -> email_address_of_sense_account
+3. Create a customs variables email -> email_address_of_sense_account, 
                               password -> password_of_sense_account
 
 #### Usage
