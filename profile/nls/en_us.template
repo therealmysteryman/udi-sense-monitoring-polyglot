@@ -1,0 +1,19 @@
+# controller
+CMD-MILIGHT-DISCOVER-NAME = Re-Discover
+ST-AURORA-ST-NAME = Connected
+
+ND-AURORA-NAME = Aurora Light
+ND-AURORA-ICON = Lamp
+ND-controller-NAME = Nanoleaf
+ND-controller-ICON = GenericCtl
+
+ST-GV3-NAME = Brightness
+ST-GV4-NAME = Effect
+ST-GV5-NAME = Status
+
+CMD-DON-NAME = On
+CMD-DOF-NAME = Off
+CMD-QUERY-NAME = Query
+CMD-SET_PROFILE-NAME = Rebuild Effect List
+CMD-SET_BRI-NAME = Set Brightness
+CMD-SET_EFFECT-NAME = Set Effect

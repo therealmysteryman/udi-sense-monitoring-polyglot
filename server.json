@@ -1,0 +1,37 @@
+{
+    "name": "NanoLeaf",
+    "docs": "https://github.com/therealmysteryman/udi-nanoleaf-polyglot",
+    "type": "python3",
+    "executable": "nanoleaf_poly.py",
+    "install": "install.sh",
+    "shortPoll": "15",
+    "longPoll": "60",
+    "description": "Connect Nanoleaf to the ISY994.",
+    "notice": "https://github.com/therealmysteryman/udi-nanoleaf-polyglot/blob/master/LICENSE",
+    "credits": [
+        {
+            "title": "nanoleaf-poly: A Polyglot v2 interface to NanoLeaf",
+            "author": "Jean-Francois Tremblay",
+            "version": "0.1.0",
+            "date": "Jan 23, 2018",
+            "source": "https://github.com/therealmysteryman/udi-nanoleaf-polyglot",
+            "license": "https://github.com/therealmysteryman/udi-nanoleaf-polyglot/blob/master/LICENSE"
+        },
+	{
+            "title": "udi-poly-template-python: A Polyglot v2 Poly template",
+            "author": "James Milne (Einstein.42)",
+            "version": "2.0.0",
+            "date": "November 8, 2017",
+            "source": "https://github.com/Einstein42/udi-poly-template-python",
+            "license": "https://raw.githubusercontent.com/Einstein42/udi-poly-template-python/master/LICENSE"
+        },
+	{
+            "title": "A python interface for Nanoleaf Aurora lighting",
+            "author": "Software2",
+            "version": "1.0.0",
+            "date": "August 20, 2017",
+            "source": "https://github.com/software-2/nanoleaf",
+            "license": "https://github.com/software-2/nanoleaf/blob/master/LICENSE"
+        }
+    ]
+}
