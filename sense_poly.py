@@ -78,9 +78,10 @@ class Controller(polyinterface.Controller):
         
         for device in  self.sense.get_discovered_device_names():
             if device is not None: 
-                self.addNode(SenseDetectedDevice(self, self.address, device.lower(), device))        
-            LOGGER.info(self.parent.sense.get_discovered_device_names())
-            LOGGER.info(self.sense.get_discovered_device_data())
+                self.addNode(SenseDetectedDevice(self, self.address, device.lower(), device)) 
+                
+        LOGGER.info(self.parent.sense.get_discovered_device_names())
+        LOGGER.info(self.sense.get_discovered_device_data())
     
     def delete(self):
         LOGGER.info('Deleting Sense')
