@@ -1,14 +1,12 @@
 # controller
-ST-controller-ST-NAME = Status
-ST-SENSE_DEVICE-ST-NAME = Connected
+ST-controller-ST-NAME = Connected
 
 ND-SENSE_DEVICE-NAME = Device
 ND-SENSE_DEVICE-ICON = Electricity
 ND-controller-NAME = Sense Monitoring
 ND-controller-ICON = EnergyMonitor
 
-ST-GV3-NAME = Brightness
-ST-GV4-NAME = Effect
-ST-GV5-NAME = Status
+ST-ST-NAME = Status
+ST-CPW-NAME = Current Energy Usage
 
 CMD-QUERY-NAME = Query
