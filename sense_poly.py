@@ -96,6 +96,7 @@ class SenseDetectedDevice(polyinterface.Node):
         self.do_poll = True
         self.timeout = 5.0
         self.query()
+        self.updateDevice()
 
     def start(self):
         pass                                     
@@ -103,6 +104,9 @@ class SenseDetectedDevice(polyinterface.Node):
     def query(self):
         self.reportDrivers()
 
+    def updateDevice():
+        LOGGER.info(self.parent.sense.get_device_info(address))
+        
     drivers = [{'driver': 'ST', 'value': 0, 'uom': 78},
                {'driver': 'CPW', 'value': 0, 'uom': 73}]
     
