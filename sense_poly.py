@@ -79,7 +79,7 @@ class Controller(polyinterface.Controller):
         
         for device in  self.sense.get_discovered_device_data():
             if device is not None: 
-                if device['Revoked'] == 'false': 
+                if device['tags']['Revoked'] == 'false': 
                     self.addNode(SenseDetectedDevice(self, self.address, device['id'], device['name'])) 
         #LOGGER.info(self.parent.sense.get_discovered_device_names())
         #LOGGER.info(self.sense.get_discovered_device_data())
