@@ -1,5 +1,5 @@
 {
-    "name": "Sense",
+    "name": "SenseMonitoring",
     "docs": "https://github.com/therealmysteryman/udi-sense-monitoring-polyglot",
     "type": "python3",
     "executable": "sense_poly.py",
