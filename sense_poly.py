@@ -109,9 +109,6 @@ class SenseDetectedDevice(polyinterface.Node):
         for x in self.parent.sense.active_devices:
             if x == name:
                 self.setDriver('ST', 100)
-            
-        
-        LOGGER.info(str(test))
         
     drivers = [{'driver': 'ST', 'value': 0, 'uom': 78},
                {'driver': 'CPW', 'value': 0, 'uom': 73}]
