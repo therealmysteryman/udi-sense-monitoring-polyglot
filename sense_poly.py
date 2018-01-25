@@ -77,12 +77,12 @@ class Controller(polyinterface.Controller):
     def discover(self, *args, **kwargs):
         time.sleep(1)
         
-        for device in  self.sense.get_discovered_device_names():
+        for device in  self.sense.get_discovered_device_data():
             if device is not None: 
-                self.addNode(SenseDetectedDevice(self, self.address, device.lower(), device)) 
+                self.addNode(SenseDetectedDevice(self, self.address, device[id], device[name])) 
                 
-        LOGGER.info(self.parent.sense.get_discovered_device_names())
-        LOGGER.info(self.sense.get_discovered_device_data())
+        #LOGGER.info(self.parent.sense.get_discovered_device_names())
+        #LOGGER.info(self.sense.get_discovered_device_data())
     
     def delete(self):
         LOGGER.info('Deleting Sense')
