@@ -105,7 +105,6 @@ class SenseDetectedDevice(polyinterface.Node):
         self.reportDrivers()
 
     def updateDevice(self,address):
-        'LOGGER.info(self.parent.sense.get_device_info(address))
         LOGGER.info(self.parent.sense.active_devices())
         
     drivers = [{'driver': 'ST', 'value': 0, 'uom': 78},
