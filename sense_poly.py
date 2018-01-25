@@ -9,7 +9,7 @@ Using this Exploratory Work done from extracting Sense Monitoring Data using Pyt
 import polyinterface
 import time
 import json
-# from sense-energy import Senseable
+from sense-energy import Senseable
 
 LOGGER = polyinterface.LOGGER
 
@@ -51,7 +51,7 @@ class Controller(polyinterface.Controller):
                 LOGGER.error('Please provide password in custom parameters')
                 return False
             
-           # self.sense =  Senseable(self.email,self.password)
+            self.sense =  Senseable(self.email,self.password)
             
             self.setDriver('ST', 1)
             self.discover()
