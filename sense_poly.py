@@ -54,6 +54,7 @@ class Controller(polyinterface.Controller):
             self.sense =  Senseable(self.email,self.password)
             
             self.setDriver('ST', 1)
+            self.setDriver('CPW', int(self.sense.active_power))
             self.discover()
                                                             
         except Exception as ex:
@@ -68,7 +69,7 @@ class Controller(polyinterface.Controller):
 
     def query(self):
         # self.reportDrivers()
-        self.setDriver('CPW', self.sense.active_power)
+        self.setDriver('CPW', int(self.sense.active_power))
         for node in self.nodes:
             if self.nodes[node].address != self.address and self.nodes[node].do_poll:
                 self.nodes[node].query()
