@@ -96,7 +96,7 @@ class SenseDetectedDevice(polyinterface.Node):
         self.do_poll = True
         self.timeout = 5.0
         self.query()
-        self.updateDevice(address)
+        self.updateDevice(name)
 
     def start(self):
         pass                                     
