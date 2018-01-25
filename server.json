@@ -1,5 +1,5 @@
 {
-    "name": "Sense Energy Monitoring",
+    "name": "Sense",
     "docs": "https://github.com/therealmysteryman/udi-sense-monitoring-polyglot",
     "type": "python3",
     "executable": "sense_poly.py",
@@ -10,7 +10,7 @@
     "notice": "https://github.com/therealmysteryman/udi-sense-monitoring-polyglot/blob/master/LICENSE",
     "credits": [
         {
-            "title": "nanoleaf-poly: A Polyglot v2 interface to Sense Monitoring",
+            "title": "sense_poly: A Polyglot v2 interface to Sense Monitoring",
             "author": "Jean-Francois Tremblay",
             "version": "0.0.1",
             "date": "Jan 24, 2018",
