@@ -62,14 +62,13 @@ class Controller(polyinterface.Controller):
             return False
 
     def shortPoll(self):
-        pass
+        self.setDriver('CPW', int(self.sense.active_power))
 
     def longPoll(self):
         self.query()
 
     def query(self):
         # self.reportDrivers()
-        self.setDriver('CPW', int(self.sense.active_power))
         for node in self.nodes:
             if self.nodes[node].address != self.address and self.nodes[node].do_poll:
                 self.nodes[node].query()
@@ -81,8 +80,6 @@ class Controller(polyinterface.Controller):
             if device is not None: 
                 if device['tags']['Revoked'] == 'false': 
                     self.addNode(SenseDetectedDevice(self, self.address, device['id'], device['name'])) 
-        #LOGGER.info(self.parent.sense.get_discovered_device_names())
-        #LOGGER.info(self.sense.get_discovered_device_data())
     
     def delete(self):
         LOGGER.info('Deleting Sense')
