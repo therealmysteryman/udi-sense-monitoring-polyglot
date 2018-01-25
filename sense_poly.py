@@ -68,7 +68,7 @@ class Controller(polyinterface.Controller):
 
     def query(self):
         # self.reportDrivers()
-        # self.setDriver('CPW', self.sense.active_power)
+        self.setDriver('CPW', self.sense.active_power)
         for node in self.nodes:
             if self.nodes[node].address != self.address and self.nodes[node].do_poll:
                 self.nodes[node].query()
@@ -76,12 +76,12 @@ class Controller(polyinterface.Controller):
     def discover(self, *args, **kwargs):
         time.sleep(1)
         
-        #for device in  self.sense.get_discovered_device_names():
-        #    if device is not None: 
-        #        self.addNode(SenseDetectedDevice(self, self.address, device.lower(), device)) 
+        for device in  self.sense.get_discovered_device_names():
+            if device is not None: 
+                self.addNode(SenseDetectedDevice(self, self.address, device.lower(), device)) 
                 
-        #LOGGER.info(self.parent.sense.get_discovered_device_names())
-        #LOGGER.info(self.sense.get_discovered_device_data())
+        LOGGER.info(self.parent.sense.get_discovered_device_names())
+        LOGGER.info(self.sense.get_discovered_device_data())
     
     def delete(self):
         LOGGER.info('Deleting Sense')
