@@ -42,14 +42,14 @@ class Controller(polyinterface.Controller):
                 LOGGER.info('Custom Email address specified: {}'.format(self.email))
             else:
                 LOGGER.error('Please provide email address in custom parameters')
-                return false
+                return False
             
             if 'password' in self.polyConfig['customParams'] and self.password is None:
                 self.password = self.polyConfig['customParams']['password']
                 LOGGER.info('Password specified')
             else:
                 LOGGER.error('Please provide password in custom parameters')
-                return false
+                return False
             
            # self.sense =  Senseable(self.email,self.password)
             
@@ -68,7 +68,7 @@ class Controller(polyinterface.Controller):
 
     def query(self):
         # self.reportDrivers()
-        self.setDriver('CPW', self.sense.active_power)
+        # self.setDriver('CPW', self.sense.active_power)
         for node in self.nodes:
             if self.nodes[node].address != self.address and self.nodes[node].do_poll:
                 self.nodes[node].query()
@@ -76,12 +76,12 @@ class Controller(polyinterface.Controller):
     def discover(self, *args, **kwargs):
         time.sleep(1)
         
-        for device in  self.sense.get_discovered_device_names():
-            if device is not None: 
-                self.addNode(SenseDetectedDevice(self, self.address, device.lower(), device)) 
+        #for device in  self.sense.get_discovered_device_names():
+        #    if device is not None: 
+        #        self.addNode(SenseDetectedDevice(self, self.address, device.lower(), device)) 
                 
-        LOGGER.info(self.parent.sense.get_discovered_device_names())
-        LOGGER.info(self.sense.get_discovered_device_data())
+        #LOGGER.info(self.parent.sense.get_discovered_device_names())
+        #LOGGER.info(self.sense.get_discovered_device_data())
     
     def delete(self):
         LOGGER.info('Deleting Sense')
@@ -108,14 +108,14 @@ class SenseDetectedDevice(polyinterface.Node):
     drivers = [{'driver': 'ST', 'value': 0, 'uom': 78},
                {'driver': 'CPW', 'value': 0, 'uom': 73}]
     
-    id = 'SENSE_DEVICE'
+    id = 'SENSEDEVICE'
     commands = {
                     'QUERY': query          
                 }
     
 if __name__ == "__main__":
     try:
-        polyglot = polyinterface.Interface('SenseMonitoringNodeServer')
+        polyglot = polyinterface.Interface('SenseNodeServer')
         polyglot.start()
         control = Controller(polyglot)
         control.runForever()
