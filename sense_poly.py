@@ -51,7 +51,7 @@ class Controller(polyinterface.Controller):
                 LOGGER.error('Please provide password in custom parameters')
                 return false
             
-            self.sense =  Senseable(self.email,self.password)
+           # self.sense =  Senseable(self.email,self.password)
             
             self.setDriver('ST', 1)
             self.discover()
