@@ -1,8 +1,8 @@
 # controller
 ST-controller-ST-NAME = Connected
 
-ND-SENSE_DEVICE-NAME = Device
-ND-SENSE_DEVICE-ICON = Electricity
+ND-SENSEDEVICE-NAME = Device
+ND-SENSEDEVICE-ICON = Electricity
 ND-controller-NAME = Sense Monitoring
 ND-controller-ICON = EnergyMonitor
 
