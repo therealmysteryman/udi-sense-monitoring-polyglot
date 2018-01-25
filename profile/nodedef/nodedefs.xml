@@ -11,7 +11,7 @@
             </accepts>
         </cmds>
     </nodeDef>
-    <nodeDef id="SENSE_DEVICE" nls="DEVICE">
+    <nodeDef id="SENSEDEVICE" nls="DEVICE">
         <editors />
         <sts>
             <st id="ST" editor="MONOFF" />
