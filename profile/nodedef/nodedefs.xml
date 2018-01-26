@@ -15,7 +15,11 @@
         <editors />
         <sts>
             <st id="ST" editor="MONOFF" />
-            <st id="CPW" editor="MWATT" /> 
+            <st id="GV1" editor="MINT" /> 
+            <st id="GV5" editor="MWATT" /> 
+            <st id="GV2" editor="MKWATT" /> 
+            <st id="GV3" editor="MINT" /> 
+            <st id="GV4" editor="MKWATT"/> 
         </sts>
         <cmds>
             <sends />
