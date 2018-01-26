@@ -52,13 +52,15 @@ class Controller(polyinterface.Controller):
                 return False
             
             self.sense =  Senseable(self.email,self.password)
-            self.query()
-            self.discover()
-                                                            
+            
         except Exception as ex:
             LOGGER.error('Error starting Sense NodeServer: %s', str(ex))
             return False
 
+        self.setDriver('ST', 1)
+        self.query()
+        self.discover()
+        
     def shortPoll(self):
         self.query()
 
