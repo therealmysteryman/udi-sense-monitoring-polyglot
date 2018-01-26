@@ -52,7 +52,7 @@ class Controller(polyinterface.Controller):
                 return False
             
             self.sense =  Senseable(self.email,self.password)
-            
+            self.query()
             self.discover()
                                                             
         except Exception as ex:
@@ -85,9 +85,7 @@ class Controller(polyinterface.Controller):
                 self.nodes[node].query()
         
     def discover(self, *args, **kwargs):
-        
         time.sleep(1)
-        
         for device in  self.sense.get_discovered_device_data():
             if device is not None: 
                 if device['tags']['Revoked'] == 'false': 
