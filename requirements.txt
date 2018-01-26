@@ -1,4 +1,4 @@
-polyinterface>=2.0.0
+polyinterface>=2.0.19
 requests
 websocket-client
 sense-energy>=0.3.0
