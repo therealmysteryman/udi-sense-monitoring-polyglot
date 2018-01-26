@@ -6,7 +6,7 @@ ND-SENSEDEVICE-ICON = Electricity
 ND-controller-NAME = Sense Monitoring
 ND-controller-ICON = EnergyMonitor
 
-ST-ST-NAME = Status
+ST-ST-NAME = Connected
 ST-CPW-NAME = Current Energy Usage
 ST-GV1-NAME = Average Monthly Runs
 ST-GV2-NAME = Average KWH
