@@ -68,7 +68,8 @@ class Controller(polyinterface.Controller):
             self.sense =  Senseable(self.email,self.password)
         except Exception as ex:
             LOGGER.error('Unable to connect to Sense API: %s', str(ex))
-            
+        self.discover()
+        
     def query(self):
         try:
             self.setDriver('ST', 1)
