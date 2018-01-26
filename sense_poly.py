@@ -95,9 +95,8 @@ class Controller(polyinterface.Controller):
         time.sleep(1)
         for device in  self.sense.get_discovered_device_data():
             if device is not None: 
-                if 'Revoked' in device and device['tags']['Revoked'] == 'false':
-                    if 'id' in device and 'name' in device:
-                        self.addNode(SenseDetectedDevice(self, self.address, device['id'], device['name'])) 
+                if device['tags']['Revoked'] == 'false':
+                    self.addNode(SenseDetectedDevice(self, self.address, device['id'], device['name'])) 
     
     def delete(self):
         self.sense = None
