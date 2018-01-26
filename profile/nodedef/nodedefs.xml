@@ -17,6 +17,7 @@
         <cmds>
             <sends />
             <accepts>
+                <cmd id="QUERY" />
             </accepts>
         </cmds>
     </nodeDef>
