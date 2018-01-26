@@ -95,8 +95,8 @@ class Controller(polyinterface.Controller):
         time.sleep(1)
         for device in  self.sense.get_discovered_device_data():
             if device is not None: 
-                if ['tags']['Revoked'] in device and device['tags']['Revoked'] == 'false':
-                    if  device['id'] in device and  device['name'] in device:
+                if 'Revoked' in device and device['tags']['Revoked'] == 'false':
+                    if 'id' in device and 'name' in device:
                         self.addNode(SenseDetectedDevice(self, self.address, device['id'], device['name'])) 
     
     def delete(self):
@@ -143,15 +143,15 @@ class SenseDetectedDevice(polyinterface.Node):
         deviceInfo = self.parent.sense.get_device_info(self.address)
         if deviceInfo is not None:
             if 'usage' in deviceInfo:
-                if ['usage']['avg_monthly_runs'] in deviceInfo:
+                if 'avg_monthly_runs' in deviceInfo:
                     self.setDriver('GV1', deviceInfo['usage']['avg_monthly_runs'])
-                if ['usage']['avg_watts'] in deviceInfo:
+                if 'avg_watts' in deviceInfo:
                     self.setDriver('GV5', int(deviceInfo['usage']['avg_watts']))
-                if ['usage']['avg_monthly_KWH'] in deviceInfo:
+                if 'avg_monthly_KWH' in deviceInfo:
                     self.setDriver('GV2', int(deviceInfo['usage']['avg_monthly_KWH']))
-                if ['usage']['current_month_runs'] in deviceInfo:    
+                if 'current_month_runs' in deviceInfo:    
                     self.setDriver('GV3', deviceInfo['usage']['current_month_runs'])
-                if ['usage']['current_month_KWH'] in deviceInfo:    
+                if 'current_month_KWH' in deviceInfo:    
                     self.setDriver('GV4', int(deviceInfo['usage']['current_month_KWH']))
         
     drivers = [{'driver': 'ST', 'value': 0, 'uom': 78},
