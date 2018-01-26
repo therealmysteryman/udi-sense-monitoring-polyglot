@@ -150,10 +150,10 @@ class SenseDetectedDevice(polyinterface.Node):
             deviceInfo = self.parent.sense.get_device_info(self.address)
             if deviceInfo is not None:
                     if 'usage' in deviceInfo : 
-                        self.setDriver('GV1', deviceInfo['usage']['avg_monthly_runs'])
+                        self.setDriver('GV1', int(deviceInfo['usage']['avg_monthly_runs']))
                         self.setDriver('GV5', int(deviceInfo['usage']['avg_watts']))
                         self.setDriver('GV2', int(deviceInfo['usage']['avg_monthly_KWH']))
-                        self.setDriver('GV3', deviceInfo['usage']['current_month_runs'])
+                        self.setDriver('GV3', int(deviceInfo['usage']['current_month_runs']))
                         self.setDriver('GV4', int(deviceInfo['usage']['current_month_KWH']))
                         
         except Exception as ex:
