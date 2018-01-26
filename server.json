@@ -4,7 +4,7 @@
     "type": "python3",
     "executable": "sense_poly.py",
     "install": "install.sh",
-    "shortPoll": "15",
+    "shortPoll": "60",
     "longPoll": "3600",
     "description": "Sense Monitoring Polyglot v2 Node Server for UDI ISY 994i.",
     "notice": "https://github.com/therealmysteryman/udi-sense-monitoring-polyglot/blob/master/LICENSE",
