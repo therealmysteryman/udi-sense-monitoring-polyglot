@@ -53,8 +53,6 @@ class Controller(polyinterface.Controller):
             
             self.sense =  Senseable(self.email,self.password)
             
-            self.setDriver('ST', 1)
-            self.setDriver('CPW', int(self.sense.active_power))
             self.discover()
                                                             
         except Exception as ex:
@@ -69,13 +67,25 @@ class Controller(polyinterface.Controller):
         self.sense =  Senseable(self.email,self.password)
 
     def query(self):
-        # self.reportDrivers()
+        self.setDriver('ST', 1)
         self.setDriver('CPW', int(self.sense.active_power))
+        self.setDriver('GV1', int(self.sense.active_solar_power))
+        self.setDriver('GV2', int(self.sense.daily_usage))
+        self.setDriver('GV3', int(self.sense.daily_production))
+        self.setDriver('GV4', int(self.sense.weekly_usage))
+        self.setDriver('GV5', int(self.sense.weekly_production))
+        self.setDriver('GV6', int(self.sense.monthly_usage))
+        self.setDriver('GV7', int(self.sense.monthly_production))
+        self.setDriver('GV8', int(self.sense.yearly_usage))
+        self.setDriver('GV9', int(self.sense.yeary_production))
+        
+        # self.reportDrivers()
         for node in self.nodes:
             if self.nodes[node].address != self.address and self.nodes[node].do_poll:
                 self.nodes[node].query()
         
     def discover(self, *args, **kwargs):
+        
         time.sleep(1)
         
         for device in  self.sense.get_discovered_device_data():
@@ -90,7 +100,16 @@ class Controller(polyinterface.Controller):
     id = 'controller'
     commands = {}
     drivers = [{'driver': 'ST', 'value': 0, 'uom': 2},
-               {'driver': 'CPW', 'value': 0, 'uom': 73}]
+               {'driver': 'CPW', 'value': 0, 'uom': 73},
+               {'driver': 'GV1', 'value': 0, 'uom': 73},
+               {'driver': 'GV2', 'value': 0, 'uom': 73},
+               {'driver': 'GV3', 'value': 0, 'uom': 73},
+               {'driver': 'GV4', 'value': 0, 'uom': 73},
+               {'driver': 'GV5', 'value': 0, 'uom': 73},
+               {'driver': 'GV6', 'value': 0, 'uom': 73},
+               {'driver': 'GV7', 'value': 0, 'uom': 73},
+               {'driver': 'GV8', 'value': 0, 'uom': 73},
+               {'driver': 'GV9', 'value': 0, 'uom': 73}]
     
 class SenseDetectedDevice(polyinterface.Node):
 
