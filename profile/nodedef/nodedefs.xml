@@ -4,6 +4,15 @@
         <sts>
             <st id="ST" editor="bool" />
             <st id="CPW" editor="MWATT" />
+            <st id="GV6" editor="MWATT" /> 
+            <st id="GV7" editor="MWATT" /> 
+            <st id="GV8" editor="MWATT" /> 
+            <st id="GV9" editor="MWATT" /> 
+            <st id="GV10" editor="MWATT" /> 
+            <st id="GV11" editor="MWATT" /> 
+            <st id="GV12" editor="MWATT" /> 
+            <st id="GV13" editor="MWATT" />
+            <st id="GV14" editor="MWATT" /> 
         </sts>
         <cmds>
             <sends />
