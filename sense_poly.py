@@ -115,11 +115,12 @@ class SenseDetectedDevice(polyinterface.Node):
         
         # Device Info
         deviceInfo = self.parent.sense.get_device_info(self.address)
-        self.setDriver('GV1', deviceInfo['usage']['avg_monthly_runs'])
-        self.setDriver('GV5', int(deviceInfo['usage']['avg_watts']))
-        self.setDriver('GV2', int(deviceInfo['usage']['avg_monthly_KWH']))
-        self.setDriver('GV3', deviceInfo['usage']['current_month_runs'])['usage']
-        self.setDriver('GV4', int(deviceInfo['usage']['current_month_KWH']))
+        if deviceInfo is not None:
+            self.setDriver('GV1', deviceInfo['usage']['avg_monthly_runs'])
+            self.setDriver('GV5', int(deviceInfo['usage']['avg_watts']))
+            self.setDriver('GV2', int(deviceInfo['usage']['avg_monthly_KWH']))
+            self.setDriver('GV3', deviceInfo['usage']['current_month_runs'])['usage']
+            self.setDriver('GV4', int(deviceInfo['usage']['current_month_KWH']))
         
     drivers = [{'driver': 'ST', 'value': 0, 'uom': 78},
                {'driver': 'GV5', 'value': 0, 'uom': 73}, 
