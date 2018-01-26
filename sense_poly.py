@@ -89,7 +89,7 @@ class Controller(polyinterface.Controller):
         except Exception as ex:
             LOGGER.error('query, nable to retrieve usage: %s', str(ex))
         
-        # self.reportDrivers()
+        self.reportDrivers()
         for node in self.nodes:
             if self.nodes[node].address != self.address and self.nodes[node].do_poll:
                 self.nodes[node].query()
@@ -135,7 +135,7 @@ class SenseDetectedDevice(polyinterface.Node):
     
     def query(self):
         self.updateDevice()
-        # self.reportDrivers()
+        self.reportDrivers()
 
     def updateDevice(self):
         try :
