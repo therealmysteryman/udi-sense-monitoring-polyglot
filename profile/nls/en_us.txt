@@ -14,4 +14,14 @@ ST-GV3-NAME = Current Month Runs
 ST-GV4-NAME = Current Month KWH
 ST-GV5-NAME = Average Watts
 
+ST-GV6-NAME = Current Solar Power
+ST-GV7-NAME = Daily Usage
+ST-GV8-NAME = Daily Production
+ST-GV9-NAME = Weekly Usage
+ST-GV10-NAME = Weekly Production
+ST-GV11-NAME = Montly Usage
+ST-GV12-NAME = Montly Production
+ST-GV13-NAME = Yearly Usage
+ST-GV14-NAME = Yearly Production
+
 CMD-QUERY-NAME = Query
