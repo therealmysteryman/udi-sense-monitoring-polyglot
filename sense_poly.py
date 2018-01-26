@@ -62,15 +62,15 @@ class Controller(polyinterface.Controller):
             return False
 
     def shortPoll(self):
-        self.setDriver('CPW', int(self.sense.active_power))
         self.query()
 
     def longPoll(self):
-        # Force a reconnect to find a better options
+        # Force a reconnect need to find a better solutions
         self.sense =  Senseable(self.email,self.password)
 
     def query(self):
         # self.reportDrivers()
+        self.setDriver('CPW', int(self.sense.active_power))
         for node in self.nodes:
             if self.nodes[node].address != self.address and self.nodes[node].do_poll:
                 self.nodes[node].query()
@@ -84,7 +84,8 @@ class Controller(polyinterface.Controller):
                     self.addNode(SenseDetectedDevice(self, self.address, device['id'], device['name'])) 
     
     def delete(self):
-        LOGGER.info('Deleting Sense')
+        self.sense = None
+        LOGGER.info('Deleting Sense Node Server')
         
     id = 'controller'
     commands = {}
@@ -104,7 +105,7 @@ class SenseDetectedDevice(polyinterface.Node):
     
     def query(self):
         self.updateDevice()
-        self.reportDrivers()
+        # self.reportDrivers()
 
     def updateDevice(self):
         # Device Power Status
