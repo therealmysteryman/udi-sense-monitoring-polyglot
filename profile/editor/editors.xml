@@ -8,5 +8,10 @@
     <editor id="MWATT">
         <range uom="73" />
     </editor>
-
+    <editor id="MKWATT">
+        <range uom="30" />
+    </editor>
+    <editor id="MINT">
+        <range uom="0" />
+    </editor>
 </editors>
