@@ -116,7 +116,7 @@ class SenseDetectedDevice(polyinterface.Node):
         # Device Info
         deviceInfo = self.parent.sense.get_device_info(self.address)
         LOGGER.info(deviceInfo)
-        self.setDriver('GV1', deviceInfo['device']['usage']['avg_monthly_runs'])
+        self.setDriver('GV1', deviceInfo['usage']['avg_monthly_runs'])
         #self.setDriver('GV5', int(deviceInfo['avg_watts']))
         #self.setDriver('GV2', int(deviceInfo['avg_monthly_KWH']))
         #self.setDriver('GV3', deviceInfo['current_month_runs'])
