@@ -70,17 +70,20 @@ class Controller(polyinterface.Controller):
             LOGGER.error('Unable to connect to Sense API: %s', str(ex))
             
     def query(self):
-        self.setDriver('ST', 1)
-        self.setDriver('CPW', int(self.sense.active_power))
-        self.setDriver('GV6', int(self.sense.active_solar_power))
-        self.setDriver('GV7', int(self.sense.daily_usage))
-        self.setDriver('GV8', int(self.sense.daily_production))
-        self.setDriver('GV9', int(self.sense.weekly_usage))
-        self.setDriver('GV10', int(self.sense.weekly_production))
-        self.setDriver('GV11', int(self.sense.monthly_usage))
-        self.setDriver('GV12', int(self.sense.monthly_production))
-        self.setDriver('GV13', int(self.sense.yearly_usage))
-        self.setDriver('GV14', int(self.sense.yeary_production))
+        try:
+            self.setDriver('ST', 1)
+            self.setDriver('CPW', int(self.sense.active_power))
+            self.setDriver('GV6', int(self.sense.active_solar_power))
+            self.setDriver('GV7', int(self.sense.daily_usage))
+            self.setDriver('GV8', int(self.sense.daily_production))
+            self.setDriver('GV9', int(self.sense.weekly_usage))
+            self.setDriver('GV10', int(self.sense.weekly_production))
+            self.setDriver('GV11', int(self.sense.monthly_usage))
+            self.setDriver('GV12', int(self.sense.monthly_production))
+            self.setDriver('GV13', int(self.sense.yearly_usage))
+            self.setDriver('GV14', int(self.sense.yeary_production))
+        except Exception as ex:
+            LOGGER.error('Unable to retrieve usage: %s', str(ex))
         
         # self.reportDrivers()
         for node in self.nodes:
@@ -91,8 +94,9 @@ class Controller(polyinterface.Controller):
         time.sleep(1)
         for device in  self.sense.get_discovered_device_data():
             if device is not None: 
-                if device['tags']['Revoked'] == 'false': 
-                    self.addNode(SenseDetectedDevice(self, self.address, device['id'], device['name'])) 
+                if ['tags']['Revoked'] in device and device['tags']['Revoked'] == 'false':
+                    if  device['id'] in device and  device['name'] in device:
+                        self.addNode(SenseDetectedDevice(self, self.address, device['id'], device['name'])) 
     
     def delete(self):
         self.sense = None
