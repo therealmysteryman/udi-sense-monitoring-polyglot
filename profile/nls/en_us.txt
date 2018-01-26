@@ -8,5 +8,10 @@ ND-controller-ICON = EnergyMonitor
 
 ST-ST-NAME = Status
 ST-CPW-NAME = Current Energy Usage
+ST-GV1-NAME = Average Monthly Runs
+ST-GV2-NAME = Average KWH
+ST-GV3-NAME = Current Month Runs
+ST-GV4-NAME = Current Month KWH
+ST-GV5-NAME = Average Watts
 
 CMD-QUERY-NAME = Query
