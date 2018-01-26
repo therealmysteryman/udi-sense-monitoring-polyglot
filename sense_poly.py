@@ -63,9 +63,12 @@ class Controller(polyinterface.Controller):
         self.query()
 
     def longPoll(self):
-        # Force a reconnect need to find a better solutions
-        self.sense =  Senseable(self.email,self.password)
-
+        try:
+            # Force a reconnect need to find a better solutions
+            self.sense =  Senseable(self.email,self.password)
+        except Exception as ex:
+            LOGGER.error('Unable to connect to Sense API: %s', str(ex))
+            
     def query(self):
         self.setDriver('ST', 1)
         self.setDriver('CPW', int(self.sense.active_power))
@@ -135,11 +138,16 @@ class SenseDetectedDevice(polyinterface.Node):
         deviceInfo = self.parent.sense.get_device_info(self.address)
         if deviceInfo is not None:
             if 'usage' in deviceInfo:
-                self.setDriver('GV1', deviceInfo['usage']['avg_monthly_runs'])
-                self.setDriver('GV5', int(deviceInfo['usage']['avg_watts']))
-                self.setDriver('GV2', int(deviceInfo['usage']['avg_monthly_KWH']))
-                self.setDriver('GV3', deviceInfo['usage']['current_month_runs'])
-                self.setDriver('GV4', int(deviceInfo['usage']['current_month_KWH']))
+                if ['usage']['avg_monthly_runs'] in deviceInfo:
+                    self.setDriver('GV1', deviceInfo['usage']['avg_monthly_runs'])
+                if ['usage']['avg_watts'] in deviceInfo:
+                    self.setDriver('GV5', int(deviceInfo['usage']['avg_watts']))
+                if ['usage']['avg_monthly_KWH'] in deviceInfo:
+                    self.setDriver('GV2', int(deviceInfo['usage']['avg_monthly_KWH']))
+                if ['usage']['current_month_runs'] in deviceInfo:    
+                    self.setDriver('GV3', deviceInfo['usage']['current_month_runs'])
+                if ['usage']['current_month_KWH'] in deviceInfo:    
+                    self.setDriver('GV4', int(deviceInfo['usage']['current_month_KWH']))
         
     drivers = [{'driver': 'ST', 'value': 0, 'uom': 78},
                {'driver': 'GV5', 'value': 0, 'uom': 73}, 
