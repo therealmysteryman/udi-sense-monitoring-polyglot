@@ -107,15 +107,27 @@ class SenseDetectedDevice(polyinterface.Node):
         self.reportDrivers()
 
     def updateDevice(self):
+        # Device Power Status
         self.setDriver('ST', 0)
         for x in self.parent.sense.active_devices:
             if x == self.name:
                 self.setDriver('ST', 100)
-        LOGGER.info(self.parent.sense.get_device_info(self.address))
+        
+        # Device Info
+        deviceInfo = self.parent.sense.get_device_info(self.address)
+        self.setDriver('GV1', deviceInfo['avg_monthly_runs'])
+        self.setDriver('GV5', int(deviceInfo['avg_watts']))
+        self.setDriver('GV2', int(deviceInfo['avg_monthly_KWH']))
+        self.setDriver('GV3', deviceInfo['current_month_runs'])
+        self.setDriver('GV4', int(deviceInfo['current_month_KWH']))
         
     drivers = [{'driver': 'ST', 'value': 0, 'uom': 78},
-               {'driver': 'CPW', 'value': 0, 'uom': 73}]
-    
+               {'driver': 'GV5', 'value': 0, 'uom': 73}, 
+               {'driver': 'GV1', 'value': 0, 'uom': 0}, 
+               {'driver': 'GV2', 'value': 0, 'uom': 30}, 
+               {'driver': 'GV3', 'value': 0, 'uom': 0}, 
+               {'driver': 'GV4', 'value': 0, 'uom': 30} ]
+
     id = 'SENSEDEVICE'
     commands = {
                     'QUERY': query          
