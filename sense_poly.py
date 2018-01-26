@@ -63,9 +63,11 @@ class Controller(polyinterface.Controller):
 
     def shortPoll(self):
         self.setDriver('CPW', int(self.sense.active_power))
+        self.query()
 
     def longPoll(self):
-        self.query()
+        # Force a reconnect to find a better options
+        self.sense =  Senseable(self.email,self.password)
 
     def query(self):
         # self.reportDrivers()
@@ -109,6 +111,7 @@ class SenseDetectedDevice(polyinterface.Node):
         for x in self.parent.sense.active_devices:
             if x == self.name:
                 self.setDriver('ST', 100)
+        LOGGER.info(self.parent.sense.get_device_info(self.address))
         
     drivers = [{'driver': 'ST', 'value': 0, 'uom': 78},
                {'driver': 'CPW', 'value': 0, 'uom': 73}]
