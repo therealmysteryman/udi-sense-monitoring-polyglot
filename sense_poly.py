@@ -85,9 +85,8 @@ class Controller(polyinterface.Controller):
             self.setDriver('GV12', int(self.sense.monthly_production))
             self.setDriver('GV13', int(self.sense.yearly_usage))
             self.setDriver('GV14', int(self.sense.yeary_production))
-            
         except Exception as ex:
-            LOGGER.error('query, nable to retrieve usage: %s', str(ex))
+            LOGGER.error('query, unable to retrieve Sense Monitor usage: %s', str(ex))
         
         self.reportDrivers()
         for node in self.nodes:
@@ -109,7 +108,9 @@ class Controller(polyinterface.Controller):
         LOGGER.info('Deleting Sense Node Server')
         
     id = 'controller'
-    commands = {}
+      commands = {
+                    'QUERY': query          
+                }
     drivers = [{'driver': 'ST', 'value': 0, 'uom': 2},
                {'driver': 'CPW', 'value': 0, 'uom': 73},
                {'driver': 'GV6', 'value': 0, 'uom': 73},
@@ -125,9 +126,12 @@ class Controller(polyinterface.Controller):
 class SenseDetectedDevice(polyinterface.Node):
 
     def __init__(self, controller, primary, address, name):
-        super(SenseDetectedDevice, self).__init__(controller, primary, address, name)
+        
+        super(SenseDetectedDevice, self).__init__(controller, primary, address.lower(), name)
         self.do_poll = True
         self.timeout = 5.0
+        self.addressOrig = address
+        self.nameOrig = name
         self.query()
         
     def start(self):
@@ -143,11 +147,11 @@ class SenseDetectedDevice(polyinterface.Node):
             # Device Power Status
             self.setDriver('ST', 0)
             for x in self.parent.sense.active_devices:
-                if x == self.name:
+                if x == self.nameOrig:
                     self.setDriver('ST', 100)
 
             # Device Info
-            deviceInfo = self.parent.sense.get_device_info(self.address)
+            deviceInfo = self.parent.sense.get_device_info(self.addressOrig)
             if deviceInfo is not None:
                     if 'usage' in deviceInfo : 
                         self.setDriver('GV1', int(deviceInfo['usage']['avg_monthly_runs']))
