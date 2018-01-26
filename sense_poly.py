@@ -108,7 +108,7 @@ class Controller(polyinterface.Controller):
         LOGGER.info('Deleting Sense Node Server')
         
     id = 'controller'
-      commands = {
+    commands = {
                     'QUERY': query          
                 }
     drivers = [{'driver': 'ST', 'value': 0, 'uom': 2},
