@@ -83,8 +83,9 @@ class Controller(polyinterface.Controller):
             self.setDriver('GV12', int(self.sense.monthly_production))
             self.setDriver('GV13', int(self.sense.yearly_usage))
             self.setDriver('GV14', int(self.sense.yeary_production))
+            
         except Exception as ex:
-            LOGGER.error('Unable to retrieve usage: %s', str(ex))
+            LOGGER.error('query, nable to retrieve usage: %s', str(ex))
         
         # self.reportDrivers()
         for node in self.nodes:
@@ -92,11 +93,14 @@ class Controller(polyinterface.Controller):
                 self.nodes[node].query()
         
     def discover(self, *args, **kwargs):
-        time.sleep(1)
-        for device in  self.sense.get_discovered_device_data():
-            if device is not None: 
-                if device['tags']['Revoked'] == 'false':
-                    self.addNode(SenseDetectedDevice(self, self.address, device['id'], device['name'])) 
+        try :
+            time.sleep(1)
+            for device in  self.sense.get_discovered_device_data():
+                if device is not None: 
+                    if device['tags']['Revoked'] == 'false':
+                        self.addNode(SenseDetectedDevice(self, self.address, device['id'], device['name']))                     
+        except Exception as ex:
+            LOGGER.error('discover: %s', str(ex))
     
     def delete(self):
         self.sense = None
@@ -132,21 +136,26 @@ class SenseDetectedDevice(polyinterface.Node):
         # self.reportDrivers()
 
     def updateDevice(self):
-        # Device Power Status
-        self.setDriver('ST', 0)
-        for x in self.parent.sense.active_devices:
-            if x == self.name:
-                self.setDriver('ST', 100)
+        try :
         
-        # Device Info
-        deviceInfo = self.parent.sense.get_device_info(self.address)
-        if deviceInfo is not None:
-                if 'usage' in deviceInfo : 
-                    self.setDriver('GV1', deviceInfo['usage']['avg_monthly_runs'])
-                    self.setDriver('GV5', int(deviceInfo['usage']['avg_watts']))
-                    self.setDriver('GV2', int(deviceInfo['usage']['avg_monthly_KWH']))
-                    self.setDriver('GV3', deviceInfo['usage']['current_month_runs'])
-                    self.setDriver('GV4', int(deviceInfo['usage']['current_month_KWH']))
+            # Device Power Status
+            self.setDriver('ST', 0)
+            for x in self.parent.sense.active_devices:
+                if x == self.name:
+                    self.setDriver('ST', 100)
+
+            # Device Info
+            deviceInfo = self.parent.sense.get_device_info(self.address)
+            if deviceInfo is not None:
+                    if 'usage' in deviceInfo : 
+                        self.setDriver('GV1', deviceInfo['usage']['avg_monthly_runs'])
+                        self.setDriver('GV5', int(deviceInfo['usage']['avg_watts']))
+                        self.setDriver('GV2', int(deviceInfo['usage']['avg_monthly_KWH']))
+                        self.setDriver('GV3', deviceInfo['usage']['current_month_runs'])
+                        self.setDriver('GV4', int(deviceInfo['usage']['current_month_KWH']))
+                        
+        except Exception as ex:
+            LOGGER.error('updateDevice: %s', str(ex))
         
     drivers = [{'driver': 'ST', 'value': 0, 'uom': 78},
                {'driver': 'GV5', 'value': 0, 'uom': 73}, 
