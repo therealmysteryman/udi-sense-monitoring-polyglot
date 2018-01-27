@@ -67,10 +67,11 @@ class Controller(polyinterface.Controller):
     def longPoll(self):
         try:
             # Force a reconnect need to find a better solutions
+            self.sense = None
             self.sense =  Senseable(self.email,self.password)
         except Exception as ex:
             LOGGER.error('Unable to connect to Sense API: %s', str(ex))
-        self.discover()
+        #self.discover()
         
     def query(self):
         try:
@@ -88,10 +89,11 @@ class Controller(polyinterface.Controller):
         except Exception as ex:
             LOGGER.error('query, unable to retrieve Sense Monitor usage: %s', str(ex))
         
-        self.reportDrivers()
         for node in self.nodes:
             if self.nodes[node].address != self.address and self.nodes[node].do_poll:
                 self.nodes[node].query()
+        
+        self.reportDrivers()
         
     def discover(self, *args, **kwargs):
         try :
@@ -139,7 +141,7 @@ class SenseDetectedDevice(polyinterface.Node):
     
     def query(self):
         self.updateDevice()
-        self.reportDrivers()
+        # self.reportDrivers()
 
     def updateDevice(self):
         try :
