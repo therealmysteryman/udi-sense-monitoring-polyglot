@@ -155,7 +155,7 @@ class SenseDetectedDevice(polyinterface.Node):
                     self.setDriver('ST', 100)
 
             # Device Info
-             LOGGER.error(self.parent.sense.get_device_info(self.addressOrig))
+            LOGGER.error(self.parent.sense.get_device_info(self.addressOrig))
             deviceInfo = self.parent.sense.get_device_info(self.addressOrig)
             if deviceInfo is not None:
                     if 'usage' in deviceInfo : 
