@@ -149,7 +149,7 @@ class SenseDetectedDevice(polyinterface.Node):
         
             # Device Power Status
             self.setDriver('ST', 0)
-            LOGGER.info(self.parent.sense.active_devices)
+            LOGGER.info(self.parent.sense.devices)
             for x in self.parent.sense.active_devices:
                 if x == self.nameOrig:
                     self.setDriver('ST', 100)
