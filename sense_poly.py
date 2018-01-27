@@ -89,6 +89,8 @@ class Controller(polyinterface.Controller):
         except Exception as ex:
             LOGGER.error('query, unable to retrieve Sense Monitor usage: %s', str(ex))
         
+        LOGGER.error(self.sense.active_power)
+        
         for node in self.nodes:
             if self.nodes[node].address != self.address and self.nodes[node].do_poll:
                 self.nodes[node].query()
@@ -153,6 +155,7 @@ class SenseDetectedDevice(polyinterface.Node):
                     self.setDriver('ST', 100)
 
             # Device Info
+             LOGGER.error(self.parent.sense.get_device_info(self.addressOrig))
             deviceInfo = self.parent.sense.get_device_info(self.addressOrig)
             if deviceInfo is not None:
                     if 'usage' in deviceInfo : 
