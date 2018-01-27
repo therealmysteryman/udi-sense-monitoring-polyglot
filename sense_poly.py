@@ -130,12 +130,11 @@ class Controller(polyinterface.Controller):
 class SenseDetectedDevice(polyinterface.Node):
 
     def __init__(self, controller, primary, address, name):
-        
+        self.nameOrig = name
+        self.addressOrig = address
         super(SenseDetectedDevice, self).__init__(controller, primary, address.lower(), name)
         self.do_poll = True
         self.timeout = 5.0
-        self.addressOrig = address
-        self.nameOrig = name
         self.query()
         
     def start(self):
