@@ -88,9 +88,7 @@ class Controller(polyinterface.Controller):
             self.setDriver('GV14', int(self.sense.yeary_production))
         except Exception as ex:
             LOGGER.error('query, unable to retrieve Sense Monitor usage: %s', str(ex))
-        
-        LOGGER.error(self.sense.active_power)
-        
+
         for node in self.nodes:
             if self.nodes[node].address != self.address and self.nodes[node].do_poll:
                 self.nodes[node].query()
