@@ -100,7 +100,7 @@ class Controller(polyinterface.Controller):
     def discover(self, *args, **kwargs):
         try :
             time.sleep(1)
-            for device in  self.sense.get_discovered_device_data():
+            for device in  self.sense.always_on_info():
                 if device is not None: 
                     if device['tags']['Revoked'] == 'false':
                         self.addNode(SenseDetectedDevice(self, self.address, device['id'], device['name']))                     
