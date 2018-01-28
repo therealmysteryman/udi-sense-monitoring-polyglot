@@ -65,14 +65,16 @@ class Controller(polyinterface.Controller):
         self.query()
 
     def longPoll(self):
+        self.discover()
+    
+    def connect(self):
         try:
             # Force a reconnect need to find a better solutions
             self.sense = None
             self.sense =  Senseable(self.email,self.password)
         except Exception as ex:
             LOGGER.error('Unable to connect to Sense API: %s', str(ex))
-        #self.discover()
-        
+    
     def query(self):
         try:
             self.setDriver('ST', 1)
@@ -140,7 +142,7 @@ class SenseDetectedDevice(polyinterface.Node):
     
     def query(self):
         self.updateDevice()
-        # self.reportDrivers()
+        self.reportDrivers()
 
     def updateDevice(self):
         try :
@@ -163,6 +165,7 @@ class SenseDetectedDevice(polyinterface.Node):
                         
         except Exception as ex:
             LOGGER.error('updateDevice: %s', str(ex))
+            self.parent.connect()
         
     drivers = [{'driver': 'ST', 'value': 0, 'uom': 78},
                {'driver': 'GV5', 'value': 0, 'uom': 73}, 
