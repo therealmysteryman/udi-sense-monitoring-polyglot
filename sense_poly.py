@@ -94,8 +94,7 @@ class Controller(polyinterface.Controller):
         for node in self.nodes:
             if self.nodes[node].address != self.address and self.nodes[node].do_poll:
                 self.nodes[node].query()
-        
-        self.reportDrivers()
+        # self.reportDrivers()
         
     def discover(self, *args, **kwargs):
         try :
