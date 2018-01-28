@@ -12,8 +12,8 @@
         {
             "title": "sense_poly: A Polyglot v2 interface to Sense Monitoring",
             "author": "Jean-Francois Tremblay",
-            "version": "0.0.1",
-            "date": "Jan 24, 2018",
+            "version": "0.0.2",
+            "date": "Jan 28, 2018",
             "source": "https://github.com/therealmysteryman/udi-sense-monitoring-polyglot",
             "license": "https://github.com/therealmysteryman/udi-sense-monitoring-polyglot/blob/master/LICENSE"
         },
