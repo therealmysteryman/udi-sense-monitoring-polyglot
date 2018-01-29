@@ -94,7 +94,7 @@ class Controller(polyinterface.Controller):
             if self.nodes[node].address != self.address and self.nodes[node].do_poll:
                 self.nodes[node].query()
         self.reportDrivers()
-        del self.sense
+        # del self.sense
         
     def discover(self, *args, **kwargs):
         self.__connect()
@@ -107,7 +107,7 @@ class Controller(polyinterface.Controller):
         except Exception as ex:
             LOGGER.error('discover: %s', str(ex))
     
-        del self.sense
+        # del self.sense
     
     def delete(self):
         LOGGER.info('Deleting Sense Node Server')
