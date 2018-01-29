@@ -51,15 +51,13 @@ class Controller(polyinterface.Controller):
                 LOGGER.error('Please provide password in custom parameters')
                 return False
             
-            self.sense =  Senseable(self.email,self.password)
-            
         except Exception as ex:
             LOGGER.error('Error starting Sense NodeServer: %s', str(ex))
             return False
-
-        self.setDriver('ST', 1)
-        self.query()
+        
         self.discover()
+        self.query()
+        
         
     def shortPoll(self):
         self.query()
@@ -67,15 +65,16 @@ class Controller(polyinterface.Controller):
     def longPoll(self):
         self.discover()
     
-    def connect(self):
+    def __connect(self):
         try:
             # Force a reconnect need to find a better solutions
-            self.sense = None
             self.sense =  Senseable(self.email,self.password)
         except Exception as ex:
             LOGGER.error('Unable to connect to Sense API: %s', str(ex))
     
     def query(self):
+        
+        self.__connect()
         try:
             self.setDriver('ST', 1)
             self.setDriver('CPW', int(self.sense.active_power))
@@ -95,8 +94,10 @@ class Controller(polyinterface.Controller):
             if self.nodes[node].address != self.address and self.nodes[node].do_poll:
                 self.nodes[node].query()
         self.reportDrivers()
+        del self.sense
         
     def discover(self, *args, **kwargs):
+        self.__connect()
         try :
             time.sleep(1)
             for device in  self.sense.get_discovered_device_data():
@@ -106,10 +107,10 @@ class Controller(polyinterface.Controller):
         except Exception as ex:
             LOGGER.error('discover: %s', str(ex))
     
+        del self.sense
+    
     def delete(self):
-        self.sense = None
         LOGGER.info('Deleting Sense Node Server')
-        
     id = 'controller'
     commands = {
                     'QUERY': query          
@@ -164,7 +165,6 @@ class SenseDetectedDevice(polyinterface.Node):
                         
         except Exception as ex:
             LOGGER.error('updateDevice: %s', str(ex))
-            self.parent.connect()
         
     drivers = [{'driver': 'ST', 'value': 0, 'uom': 78},
                {'driver': 'GV5', 'value': 0, 'uom': 73}, 
