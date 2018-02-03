@@ -1,5 +1,7 @@
 # Sense Monitoring Polyglot V2 Node Server
 
+![Build Status](https://travis-ci.org/therealmysteryman/udi-sense-monitoring-polyglot.svg?branch=master)
+
 This Poly provides an interface between Sense Monitoring undocumented API and Polyglot v2 server. Provide Electricity Usage and Status of a Device. This use undocumented API from Sense via a Python Library (https://github.com/scottbonline/sense).
 
 *** Currently in Active Development ***
