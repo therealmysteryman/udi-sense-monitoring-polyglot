@@ -54,9 +54,8 @@ class Controller(polyinterface.Controller):
             return False
         
         self.connectSense()
-        self.discover()
         self.query()
-        
+        self.discover()
         
     def shortPoll(self):
         self.connectSense()
@@ -75,8 +74,8 @@ class Controller(polyinterface.Controller):
     def query(self):
         try:
             self.setDriver('ST', 1, True)
-            #self.setDriver('CPW', int(self.sense.active_power), True)
-            #self.setDriver('GV6', int(self.sense.active_solar_power), True)
+            self.setDriver('CPW', int(self.sense.active_power), True)
+            self.setDriver('GV6', int(self.sense.active_solar_power), True)
             self.setDriver('GV7', int(self.sense.daily_usage), True)
             self.setDriver('GV8', int(self.sense.daily_production), True)
             self.setDriver('GV9', int(self.sense.weekly_usage), True)
@@ -132,10 +131,10 @@ class SenseDetectedDevice(polyinterface.Node):
         try :
         
             # Device Power Status
-            #self.setDriver('ST', 0,True)
-            #for x in self.parent.sense.active_devices:
-            #    if x == self.nameOrig:
-            #        self.setDriver('ST', 100, True)
+            self.setDriver('ST', 0,True)
+            for x in self.parent.sense.active_devices:
+                if x == self.nameOrig:
+                    self.setDriver('ST', 100, True)
 
             # Device Info
             deviceInfo = self.parent.sense.get_device_info(self.addressOrig)
