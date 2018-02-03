@@ -53,6 +53,7 @@ class Controller(polyinterface.Controller):
             LOGGER.error('Error starting Sense NodeServer: %s', str(ex))
             return False
         
+        self.connectSense()
         self.discover()
         self.query()
         
