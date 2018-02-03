@@ -11,7 +11,7 @@
     "credits": [
         {
             "title": "sense_poly: A Polyglot v2 interface to Sense Monitoring",
-            "author": "Jean-Francois Tremblay (AutomationGeek)",
+            "author": "AutomationGeek",
             "version": "0.0.3",
             "date": "Feb 03, 2018",
             "source": "https://github.com/therealmysteryman/udi-sense-monitoring-polyglot",
