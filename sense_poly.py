@@ -58,7 +58,6 @@ class Controller(polyinterface.Controller):
         self.discover()
         
     def shortPoll(self):
-        self.connectSense()
         for node in self.nodes:
             self.nodes[node].query()
 
@@ -88,7 +87,8 @@ class Controller(polyinterface.Controller):
             LOGGER.error('query, unable to retrieve Sense Monitor usage: %s', str(ex))
         
     def discover(self, *args, **kwargs):
-        time.sleep(1)
+        time.sleep(5)
+        self.connectSense()
         try :
             for device in  self.sense.get_discovered_device_data():
                 if device is not None: 
