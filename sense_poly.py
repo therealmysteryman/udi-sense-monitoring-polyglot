@@ -34,7 +34,6 @@ class Controller(polyinterface.Controller):
     def start(self):
         LOGGER.info('Started Sense NodeServer version %s', str(VERSION))
         try:
-            
             if 'email' in self.polyConfig['customParams'] and self.email is None:
                 self.email = self.polyConfig['customParams']['email']
                 LOGGER.info('Custom Email address specified: {}'.format(self.email))
@@ -54,15 +53,16 @@ class Controller(polyinterface.Controller):
             return False
         
         self.connectSense()
-        self.query()
         self.discover()
+        self.query()
         
     def shortPoll(self):
-        self.connectSense()
         for node in self.nodes:
             self.nodes[node].query()
 
     def longPoll(self):
+        time.sleep(5)
+        self.connectSense()
         self.discover()
     
     def connectSense(self):
@@ -129,7 +129,6 @@ class SenseDetectedDevice(polyinterface.Node):
         
     def query(self):
         try :
-        
             # Device Power Status
             self.setDriver('ST', 0,True)
             for x in self.parent.sense.active_devices:
