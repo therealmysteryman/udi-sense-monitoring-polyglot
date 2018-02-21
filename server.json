@@ -6,14 +6,14 @@
     "install": "install.sh",
     "shortPoll": "60",
     "longPoll": "3600",
-    "description": "Sense Monitoring Polyglot v2 Node Server for UDI ISY 994i.",
+    "description": "Connect Sense Energy Monitor to UDI ISY 994i.",
     "notice": "https://github.com/therealmysteryman/udi-sense-monitoring-polyglot/blob/master/LICENSE",
     "credits": [
         {
-            "title": "sense_poly: A Polyglot v2 interface to Sense Monitoring",
+            "title": "sense_poly: A Polyglot v2 interface to Sense Energy Monitor ",
             "author": "AutomationGeek",
-            "version": "0.0.4",
-            "date": "Feb 03, 2018",
+            "version": "0.5",
+            "date": "Feb 20, 2018",
             "source": "https://github.com/therealmysteryman/udi-sense-monitoring-polyglot",
             "license": "https://github.com/therealmysteryman/udi-sense-monitoring-polyglot/blob/master/LICENSE"
         },
