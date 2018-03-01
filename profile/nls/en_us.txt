@@ -25,3 +25,4 @@ ST-GV13-NAME = Yearly Usage
 ST-GV14-NAME = Yearly Production
 
 CMD-QUERY-NAME = Query
+CMD-DISCOVERY-NAME = Discover
