@@ -4,9 +4,5 @@ python:
 - '3.6'
 before_install:
 - chmod +x validatePythonSyntax.sh
-- chmod +x zipprofile
-- chmod +x commitToGit.sh
 script:
 - "./validatePythonSyntax.sh"
-- "./zipprofile"
-- "./commitToGit.sh"
