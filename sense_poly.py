@@ -106,7 +106,7 @@ class Controller(polyinterface.Controller):
         except Exception as ex:
             LOGGER.error('discover: %s', str(ex))
     
-    def runDiscover(self):
+    def runDiscover(self,command):
         self.discover()
     
     def delete(self):
