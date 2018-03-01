@@ -30,6 +30,7 @@ class Controller(polyinterface.Controller):
         self.email = None
         self.password = None
         self.sense = None
+        self.discovery_thread = None
         
     def start(self):
         LOGGER.info('Started Sense NodeServer version %s', str(VERSION))
@@ -53,8 +54,8 @@ class Controller(polyinterface.Controller):
             return False
         
         self.connectSense()
-        self.discover()
         self.query()
+        self.discover()
         
     def shortPoll(self):
         for node in self.nodes:
@@ -63,7 +64,6 @@ class Controller(polyinterface.Controller):
     def longPoll(self):
         time.sleep(5)
         self.connectSense()
-        self.discover()
     
     def connectSense(self):
         try:
@@ -86,8 +86,16 @@ class Controller(polyinterface.Controller):
             self.setDriver('GV14', int(self.sense.yeary_production), True)
         except Exception as ex:
             LOGGER.error('query, unable to retrieve Sense Monitor usage: %s', str(ex))
-        
-    def discover(self, *args, **kwargs):
+    
+    def discover(self, *args, **kwargs):    
+        if self.discovery_thread is not None:
+            if self.discovery_thread.isAlive():
+                LOGGER.info('Discovery is still in progress')
+                return
+        self.discovery_thread = Thread(target=self._discovery_process)
+        self.discovery_thread.start()
+    
+    def _discovery_process(self):
         time.sleep(1)
         try :
             for device in  self.sense.get_discovered_device_data():
@@ -97,12 +105,16 @@ class Controller(polyinterface.Controller):
         except Exception as ex:
             LOGGER.error('discover: %s', str(ex))
     
+    def runDiscover()
+        self.discover()
+    
     def delete(self):
         LOGGER.info('Deleting Sense Node Server')
         
     id = 'controller'
     commands = {
-                    'QUERY': query          
+                    'QUERY': query,
+                    'DISCOVERY' : runDiscover
                 }
     drivers = [{'driver': 'ST', 'value': 0, 'uom': 2},
                {'driver': 'CPW', 'value': 0, 'uom': 73},
