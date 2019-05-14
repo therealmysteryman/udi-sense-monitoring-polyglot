@@ -98,13 +98,15 @@ class Controller(polyinterface.Controller):
     
     def _discovery_process(self):
         time.sleep(1)
-        try :
-            for device in  self.sense.get_discovered_device_data():
-                if device is not None: 
+        for device in  self.sense.get_discovered_device_data():
+            if device is not None: 
+                try :
                     if device['tags']['Revoked'] == 'false':
                         self.addNode(SenseDetectedDevice(self, self.address, device['id'], device['name']))                     
-        except Exception as ex:
-            LOGGER.error('discover: %s', str(ex))
+                except Exception as ex: 
+                    LOGGER.error('discover: %s', str(ex))
+                else:
+                    self.addNode(SenseDetectedDevice(self, self.address, device['id'], device['name']))
     
     def runDiscover(self,command):
         self.discover()
