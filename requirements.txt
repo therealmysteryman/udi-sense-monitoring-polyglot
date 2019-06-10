@@ -1,4 +1,5 @@
 polyinterface>=2.0.19
 requests
 websocket-client
+aiohttp
 sense_energy>=0.3.1
