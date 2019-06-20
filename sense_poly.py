@@ -160,7 +160,7 @@ class SenseDetectedDevice(polyinterface.Node):
                         self.setDriver('GV5', int(deviceInfo['usage']['avg_watts']),True)
                         self.setDriver('GV2', int(deviceInfo['usage']['avg_monthly_KWH']),True)
                         self.setDriver('GV3', int(deviceInfo['usage']['current_month_runs']),True)
-                        self.setDriver('GV4', int(deviceInfo['usage']['current_month_KWH']),True
+                        self.setDriver('GV4', int(deviceInfo['usage']['current_month_KWH']),True)
                     else :
                         self.setDriver('GV1',0,True)
                         self.setDriver('GV5',0,True)
