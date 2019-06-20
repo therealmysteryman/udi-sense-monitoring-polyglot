@@ -66,6 +66,7 @@ class Controller(polyinterface.Controller):
     def longPoll(self):
         self.connectSense()
         sense.update_realtime()
+        sense.update_trend_data()
     
     def connectSense(self):
         try:
@@ -76,6 +77,7 @@ class Controller(polyinterface.Controller):
     def query(self):
         try:
             sense.update_realtime()
+            sense.update_trend_data()
             self.setDriver('ST', 1, True)
             self.setDriver('CPW', int(self.sense.active_power), True)
             self.setDriver('GV6', int(self.sense.active_solar_power), True)
@@ -158,8 +160,8 @@ class SenseDetectedDevice(polyinterface.Node):
                         self.setDriver('GV5', int(deviceInfo['usage']['avg_watts']),True)
                         self.setDriver('GV2', int(deviceInfo['usage']['avg_monthly_KWH']),True)
                         self.setDriver('GV3', int(deviceInfo['usage']['current_month_runs']),True)
-                        self.setDriver('GV4', int(deviceInfo['usage']['current_month_KWH']),True)
-                     else :
+                        self.setDriver('GV4', int(deviceInfo['usage']['current_month_KWH']),True
+                    else :
                         self.setDriver('GV1',0,True)
                         self.setDriver('GV5',0,True)
                         self.setDriver('GV2',0,True)
