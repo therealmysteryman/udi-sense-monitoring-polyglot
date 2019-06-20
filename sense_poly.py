@@ -59,12 +59,13 @@ class Controller(polyinterface.Controller):
         self.discover()
         
     def shortPoll(self):
+        self.query()
         for node in self.nodes:
             self.nodes[node].query()
 
     def longPoll(self):
-        time.sleep(5)
         self.connectSense()
+        sense.update_realtime()
     
     def connectSense(self):
         try:
@@ -74,6 +75,7 @@ class Controller(polyinterface.Controller):
     
     def query(self):
         try:
+            sense.update_realtime()
             self.setDriver('ST', 1, True)
             self.setDriver('CPW', int(self.sense.active_power), True)
             self.setDriver('GV6', int(self.sense.active_solar_power), True)
@@ -104,9 +106,7 @@ class Controller(polyinterface.Controller):
                     if device['tags']['Revoked'] == 'false':
                         self.addNode(SenseDetectedDevice(self, self.address, device['id'], device['name']))                     
                 except Exception as ex: 
-                    LOGGER.error('discover: %s', str(ex))
-                else:
-                    self.addNode(SenseDetectedDevice(self, self.address, device['id'], device['name']))
+                    LOGGER.error('discover device name: %s', str(device['name']))
     
     def runDiscover(self,command):
         self.discover()
@@ -159,6 +159,12 @@ class SenseDetectedDevice(polyinterface.Node):
                         self.setDriver('GV2', int(deviceInfo['usage']['avg_monthly_KWH']),True)
                         self.setDriver('GV3', int(deviceInfo['usage']['current_month_runs']),True)
                         self.setDriver('GV4', int(deviceInfo['usage']['current_month_KWH']),True)
+                     else :
+                        self.setDriver('GV1',0,True)
+                        self.setDriver('GV5',0,True)
+                        self.setDriver('GV2',0,True)
+                        self.setDriver('GV3',0,True)
+                        self.setDriver('GV4',0,True)
                         
         except Exception as ex:
             LOGGER.error('updateDevice: %s', str(ex))
