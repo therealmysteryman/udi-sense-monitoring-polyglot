@@ -88,6 +88,7 @@ class Controller(polyinterface.Controller):
             self.setDriver('GV11', str(int(self.sense.monthly_usage)), True)
             self.setDriver('GV12', str(int(self.sense.monthly_production)), True)
             self.setDriver('GV13', str(int(self.sense.yearly_usage)), True)
+            self.reportDrivers()
         except Exception as ex:
             LOGGER.error('query, unable to retrieve Sense Monitor usage: %s', str(ex))
     
@@ -167,6 +168,7 @@ class SenseDetectedDevice(polyinterface.Node):
                         self.setDriver('GV3',0,True)
                         self.setDriver('GV4',0,True)
                         
+        self.reportDrivers()
         except Exception as ex:
             LOGGER.error('updateDevice: %s', str(ex))
 
