@@ -65,8 +65,6 @@ class Controller(polyinterface.Controller):
 
     def longPoll(self):
         self.connectSense()
-        self.sense.update_realtime()
-        self.sense.update_trend_data()
     
     def connectSense(self):
         try:
