@@ -166,9 +166,8 @@ class SenseDetectedDevice(polyinterface.Node):
                         self.setDriver('GV5',0,True)
                         self.setDriver('GV2',0,True)
                         self.setDriver('GV3',0,True)
-                        self.setDriver('GV4',0,True)
-                        
-        self.reportDrivers()
+                        self.setDriver('GV4',0,True)            
+            self.reportDrivers()
         except Exception as ex:
             LOGGER.error('updateDevice: %s', str(ex))
 
