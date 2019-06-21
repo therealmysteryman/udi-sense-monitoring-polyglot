@@ -65,8 +65,8 @@ class Controller(polyinterface.Controller):
 
     def longPoll(self):
         self.connectSense()
-        sense.update_realtime()
-        sense.update_trend_data()
+        self.sense.update_realtime()
+        self.sense.update_trend_data()
     
     def connectSense(self):
         try:
@@ -76,8 +76,8 @@ class Controller(polyinterface.Controller):
     
     def query(self):
         try:
-            sense.update_realtime()
-            sense.update_trend_data()
+            self.sense.update_realtime()
+            self.sense.update_trend_data()
             self.setDriver('ST', 1, True)
             self.setDriver('CPW', str(int(self.sense.active_power)), True)
             self.setDriver('GV6', str(int(self.sense.active_solar_power)), True)
