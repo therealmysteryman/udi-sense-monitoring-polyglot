@@ -23,8 +23,6 @@ This will create one node for the controller with the Sense Power Usage and then
 
 1. If a device is removed from Sense, it won't be removed from the node server you need to manually delete it.
 2. If you rename or merge a device, you may need to delete the old device in the node server and re-import it.
-3. I currently experience some issue with the Libary to access Sense API, it's possible that the realtime data is not updated every 60 seconds and experience some delay in the update.
-
 
 #### Source
 
