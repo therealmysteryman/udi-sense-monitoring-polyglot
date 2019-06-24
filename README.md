@@ -17,13 +17,13 @@ You can install it manually running
 
 #### Usage
 
-This will create one node for the controller with the Sense Power Usage and then one node for each detected device with their current power usage and their status (on / off). Those value a refreshed every 30 seconds.
+This will create one node for the controller with the Sense Power Usage and then one node for each detected device with their current power usage and their status (on / off). Those value a refreshed every 60 seconds.
 
 #### Known Issues
 
 1. If a device is removed from Sense, it won't be removed from the node server you need to manually delete it.
 2. If you rename or merge a device, you may need to delete the old device in the node server and re-import it.
-3. I currently experience some issue with the Libary to access Sense API, it's possible that the realtime data is not updated every 30 seconds and experience some delay in the update.
+3. I currently experience some issue with the Libary to access Sense API, it's possible that the realtime data is not updated every 60 seconds and experience some delay in the update.
 
 
 #### Source
