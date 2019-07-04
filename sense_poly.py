@@ -69,7 +69,7 @@ class Controller(polyinterface.Controller):
     def connectSense(self):
         try:
             self.sense = Senseable()
-            self.sense.authenticate("***REMOVED***", "***REMOVED***")            
+            self.sense.authenticate(self.email,self.password)            
         except Exception as ex:
             LOGGER.error('Unable to connect to Sense API: %s', str(ex))
     
