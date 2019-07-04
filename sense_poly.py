@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-This is a NodeServer for Sense Monitoring written by automationgeek (Jean-Francois Tremblay) 
+This is a NodeServer for Sense Monitoring written by automationgeek (Jean-Francois Tremblay)  
 based on the NodeServer template for Polyglot v2 written in Python2/3 by Einstein.42 (James Milne) milne.james@gmail.com.
 Using this Exploratory Work done from extracting Sense Monitoring Data using Python Library by scottbonline https://github.com/scottbonline/sense
 """
