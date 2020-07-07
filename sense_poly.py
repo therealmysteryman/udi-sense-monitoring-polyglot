@@ -32,6 +32,7 @@ class Controller(polyinterface.Controller):
         self.password = None
         self.sense = None
         self.discovery_thread = None
+        self.hb = 0
         
     def start(self):
         LOGGER.info('Started Sense NodeServer version %s', str(VERSION))
@@ -65,6 +66,19 @@ class Controller(polyinterface.Controller):
 
     def longPoll(self):
         self.connectSense()
+        self.heartbeat()
+    
+    def heartbeat(self):
+        self.l_info('heartbeat','hb={}'.format(self.hb))
+        if self.hb == 0:
+            self.reportCmd("DON",2)
+            self.hb = 1
+        else:
+            self.reportCmd("DOF",2)
+            self.hb = 0
+    
+    def l_info(self, name, string):
+        LOGGER.info("%s:%s: %s" %  (self.id,name,string))
     
     def connectSense(self):
         try:
@@ -120,7 +134,7 @@ class Controller(polyinterface.Controller):
                     'QUERY': query,
                     'DISCOVERY' : runDiscover
                 }
-    drivers = [{'driver': 'ST', 'value': 0, 'uom': 2},
+    drivers = [{'driver': 'ST', 'value': 1, 'uom': 2},
                {'driver': 'CPW', 'value': 0, 'uom': 73},
                {'driver': 'GV6', 'value': 0, 'uom': 73},
                {'driver': 'GV7', 'value': 0, 'uom': 73},
