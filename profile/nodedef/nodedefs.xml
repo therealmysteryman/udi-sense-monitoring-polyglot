@@ -2,7 +2,7 @@
     <nodeDef id="controller" nls="ctl">
         <editors />
         <sts>
-            <st id="ST" editor="bool" />
+            <st id="ST" editor="BOOL" />
             <st id="CPW" editor="MWATT" />
             <st id="GV6" editor="MWATT" /> 
             <st id="GV7" editor="MWATT" /> 
@@ -15,7 +15,10 @@
             <st id="GV14" editor="MWATT" /> 
         </sts>
         <cmds>
-            <sends />
+            <sends>
+                <cmd id="DON" />
+                <cmd id="DOF" />
+            </sends>
             <accepts>
                 <cmd id="QUERY" />
                 <cmd id="DISCOVERY" />
@@ -33,7 +36,10 @@
             <st id="GV4" editor="MKWATT"/> 
         </sts>
         <cmds>
-            <sends />
+            <sends>
+                <cmd id="DON" />
+                <cmd id="DOF" />
+            </sends>
             <accepts>
                 <cmd id="QUERY" />
             </accepts>
