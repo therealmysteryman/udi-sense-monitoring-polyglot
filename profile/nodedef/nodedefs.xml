@@ -1,5 +1,5 @@
 <nodeDefs>
-    <nodeDef id="controller" nls="ctl">
+    <nodeDef id="controller" nodeType="139" nls="ctl">
         <editors />
         <sts>
             <st id="ST" editor="BOOL" />
@@ -25,7 +25,7 @@
             </accepts>
         </cmds>
     </nodeDef>
-    <nodeDef id="SENSEDEVICE" nls="DEVICE">
+    <nodeDef id="SENSEDEVICE" nodeType="139" nls="DEVICE">
         <editors />
         <sts>
             <st id="ST" editor="MONOFF" />
