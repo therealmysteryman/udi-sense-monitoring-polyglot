@@ -1,6 +1,5 @@
 <nodeDefs>
     <nodeDef id="controller" nodeType="139" nls="ctl">
-        <editors />
         <sts>
             <st id="ST" editor="BOOL" />
             <st id="CPW" editor="MWATT" />
@@ -26,7 +25,6 @@
         </cmds>
     </nodeDef>
     <nodeDef id="SENSEDEVICE" nodeType="139" nls="DEVICE">
-        <editors />
         <sts>
             <st id="ST" editor="MONOFF" />
             <st id="GV1" editor="MINT" /> 
