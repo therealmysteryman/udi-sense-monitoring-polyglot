@@ -15,8 +15,8 @@ ST-ctl-GV9-NAME = WK Usage
 ST-ctl-GV10-NAME = WK Production
 ST-ctl-GV11-NAME = MO Usage
 ST-ctl-GV12-NAME = MO Production
-ST-ctl-GV13-NAME = Y Usage
-ST-ctl-GV14-NAME = Y Production
+ST-ctl-GV13-NAME = YL Usage
+ST-ctl-GV14-NAME = YL Production
 
 ST-DEVICE-ST-NAME = Status
 ST-DEVICE-GV1-NAME = AVG Monthly Runs
