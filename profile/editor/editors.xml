@@ -12,6 +12,6 @@
         <range uom="30" />
     </editor>
     <editor id="MINT">
-        <range uom="0" />
+        <range uom="56" />
     </editor>
 </editors>
