@@ -186,9 +186,9 @@ class SenseDetectedDevice(polyinterface.Node):
 
     drivers = [{'driver': 'ST', 'value': 0, 'uom': 78},
                {'driver': 'GV5', 'value': 0, 'uom': 73}, 
-               {'driver': 'GV1', 'value': 0, 'uom': 0}, 
+               {'driver': 'GV1', 'value': 0, 'uom': 56}, 
                {'driver': 'GV2', 'value': 0, 'uom': 30}, 
-               {'driver': 'GV3', 'value': 0, 'uom': 0}, 
+               {'driver': 'GV3', 'value': 0, 'uom': 56}, 
                {'driver': 'GV4', 'value': 0, 'uom': 30} ]
 
     id = 'SENSEDEVICE'
