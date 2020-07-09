@@ -3,27 +3,27 @@ ST-controller-ST-NAME = Connected
 
 ND-SENSEDEVICE-NAME = Device
 ND-SENSEDEVICE-ICON = Electricity
-ND-controller-NAME = Sense Monitoring
+ND-controller-NAME = Sense
 ND-controller-ICON = EnergyMonitor
 
 ST-ctl-ST-NAME = Status
-ST-ctl-CPW-NAME = Current Energy Usage
-ST-ctl-GV6-NAME = Current Solar Power
-ST-ctl-GV7-NAME = Daily Usage
-ST-ctl-GV8-NAME = Daily Production
-ST-ctl-GV9-NAME = Weekly Usage
-ST-ctl-GV10-NAME = Weekly Production
-ST-ctl-GV11-NAME = Montly Usage
-ST-ctl-GV12-NAME = Montly Production
-ST-ctl-GV13-NAME = Yearly Usage
-ST-ctl-GV14-NAME = Yearly Production
+ST-ctl-CPW-NAME = Energy Usage
+ST-ctl-GV6-NAME = Solar Power
+ST-ctl-GV7-NAME = DL Usage
+ST-ctl-GV8-NAME = DL Production
+ST-ctl-GV9-NAME = WK Usage
+ST-ctl-GV10-NAME = WK Production
+ST-ctl-GV11-NAME = MO Usage
+ST-ctl-GV12-NAME = MO Production
+ST-ctl-GV13-NAME = Y Usage
+ST-ctl-GV14-NAME = Y Production
 
 ST-DEVICE-ST-NAME = Status
-ST-DEVICE-GV1-NAME = Average Monthly Runs
-ST-DEVICE-GV2-NAME = Average KWH
-ST-DEVICE-GV3-NAME = Current Month Runs
-ST-DEVICE-GV4-NAME = Current Month KWH
-ST-DEVICE-GV5-NAME = Average Watts
+ST-DEVICE-GV1-NAME = AVG Monthly Runs
+ST-DEVICE-GV2-NAME = AVG KWH
+ST-DEVICE-GV3-NAME = MO Runs
+ST-DEVICE-GV4-NAME = MO KWH
+ST-DEVICE-GV5-NAME = AVG Watts
 
 CMD-QUERY-NAME = Query
 CMD-DISCOVERY-NAME = Discover
