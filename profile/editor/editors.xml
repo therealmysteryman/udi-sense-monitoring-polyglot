@@ -1,6 +1,6 @@
 <editors>
     <editor id="BOOL">
-        <range uom="2" subset="0,1"/>
+        <range uom="2" subset="0,1" />
     </editor>
     <editor id="MONOFF">
         <range uom="78" subset="0,100" />
@@ -12,6 +12,6 @@
         <range uom="30" />
     </editor>
     <editor id="MINT">
-        <range uom="56" />
+        <range uom="25" min="0" max="1000" prec="0" />
     </editor>
 </editors>
