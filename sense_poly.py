@@ -41,6 +41,7 @@ class Controller(polyinterface.Controller):
         self.discovery_thread = None
         self.initialized = False
         self.hb = 0
+        self.queryON = False
         
     def start(self):
         LOGGER.info('Started Sense NodeServer version %s', str(VERSION))
