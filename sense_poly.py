@@ -86,7 +86,7 @@ class Controller(polyinterface.Controller):
             LOGGER.error('query, unable to retrieve Sense Monitor usage: %s', str(ex))
         
         for node in self.nodes:
-            if self.nodes[node].queryON == True :
+            if  node != self.address and self.nodes[node].queryON == True :
                 self.nodes[node].query()
 
     def longPoll(self):
