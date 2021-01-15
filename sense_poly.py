@@ -158,7 +158,7 @@ class Controller(polyinterface.Controller):
         
     id = 'controller'
     commands = {
-                    'QUERY': query,
+                    'QUERY': shortPoll,
                     'DISCOVERY' : runDiscover
                 }
     drivers = [{'driver': 'ST', 'value': 1, 'uom': 2},
