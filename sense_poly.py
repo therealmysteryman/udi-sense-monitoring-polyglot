@@ -9,19 +9,26 @@ Using this Exploratory Work done from extracting Sense Monitoring Data using Pyt
 import polyinterface
 import time
 import json
+import sys
+from copy import deepcopy
 from threading import Thread
 from sense_energy import Senseable
 
 LOGGER = polyinterface.LOGGER
+SERVERDATA = json.load(open('server.json'))
+VERSION = SERVERDATA['credits'][0]['version']
 
-with open('server.json') as data:
-    SERVERDATA = json.load(data)
-try:
-    VERSION = SERVERDATA['credits'][0]['version']
-except (KeyError, ValueError):
-    LOGGER.info('Version not found in server.json.')
-    VERSION = '0.0.0'
-
+def get_profile_info(logger):
+    pvf = 'profile/version.txt'
+    try:
+        with open(pvf) as f:
+            pv = f.read().replace('\n', '')
+    except Exception as err:
+        logger.error('get_profile_info: failed to read  file {0}: {1}'.format(pvf,err), exc_info=True)
+        pv = 0
+    f.close()
+    return { 'version': pv }
+    
 class Controller(polyinterface.Controller):
 
     def __init__(self, polyglot):
@@ -32,6 +39,7 @@ class Controller(polyinterface.Controller):
         self.password = None
         self.sense = None
         self.discovery_thread = None
+        self.initialized = False
         self.hb = 0
         
     def start(self):
@@ -55,14 +63,31 @@ class Controller(polyinterface.Controller):
             LOGGER.error('Error starting Sense NodeServer: %s', str(ex))
             return False
         
-        self.connectSense()
-        self.query()
+        self.check_profile()
+        self.heartbeat()
         self.discover()
         
     def shortPoll(self):
-        self.query()
+        try:
+            self.sense.update_realtime()
+            self.sense.update_trend_data()
+            self.setDriver('ST', 1, True)
+            self.setDriver('CPW', str(int(self.sense.active_power)), True)
+            self.setDriver('GV6', str(int(self.sense.active_solar_power)), True)
+            self.setDriver('GV7', str(int(self.sense.daily_usage)), True)
+            self.setDriver('GV8', str(int(self.sense.daily_production)), True)
+            self.setDriver('GV9', str(int(self.sense.weekly_usage)), True)
+            self.setDriver('GV10', str(int(self.sense.weekly_production)), True)
+            self.setDriver('GV11', str(int(self.sense.monthly_usage)), True)
+            self.setDriver('GV12', str(int(self.sense.monthly_production)), True)
+            self.setDriver('GV13', str(int(self.sense.yearly_usage)), True)
+            self.reportDrivers()
+        except Exception as ex:
+            LOGGER.error('query, unable to retrieve Sense Monitor usage: %s', str(ex))
+        
         for node in self.nodes:
-            self.nodes[node].query()
+            if self.nodes[node].queryON == True :
+                self.nodes[node].query()
 
     def longPoll(self):
         self.connectSense()
@@ -87,34 +112,16 @@ class Controller(polyinterface.Controller):
         except Exception as ex:
             LOGGER.error('Unable to connect to Sense API: %s', str(ex))
     
-    def query(self):
-        try:
-            self.sense.update_realtime()
-            self.sense.update_trend_data()
-            self.setDriver('ST', 1, True)
-            self.setDriver('CPW', str(int(self.sense.active_power)), True)
-            self.setDriver('GV6', str(int(self.sense.active_solar_power)), True)
-            self.setDriver('GV7', str(int(self.sense.daily_usage)), True)
-            self.setDriver('GV8', str(int(self.sense.daily_production)), True)
-            self.setDriver('GV9', str(int(self.sense.weekly_usage)), True)
-            self.setDriver('GV10', str(int(self.sense.weekly_production)), True)
-            self.setDriver('GV11', str(int(self.sense.monthly_usage)), True)
-            self.setDriver('GV12', str(int(self.sense.monthly_production)), True)
-            self.setDriver('GV13', str(int(self.sense.yearly_usage)), True)
-            self.reportDrivers()
-        except Exception as ex:
-            LOGGER.error('query, unable to retrieve Sense Monitor usage: %s', str(ex))
-    
     def discover(self, *args, **kwargs):    
         if self.discovery_thread is not None:
-            if self.discovery_thread.isAlive():
+            if self.discovery_thread.is_alive():
                 LOGGER.info('Discovery is still in progress')
                 return
         self.discovery_thread = Thread(target=self._discovery_process)
         self.discovery_thread.start()
     
     def _discovery_process(self):
-        time.sleep(1)
+        self.connectSense()
         for device in  self.sense.get_discovered_device_data():
             if device is not None: 
                 try :
@@ -125,6 +132,26 @@ class Controller(polyinterface.Controller):
     
     def runDiscover(self,command):
         self.discover()
+    
+    def check_profile(self):
+        self.profile_info = get_profile_info(LOGGER)
+        # Set Default profile version if not Found
+        cdata = deepcopy(self.polyConfig['customData'])
+        LOGGER.info('check_profile: profile_info={0} customData={1}'.format(self.profile_info,cdata))
+        if not 'profile_info' in cdata:
+            cdata['profile_info'] = { 'version': 0 }
+        if self.profile_info['version'] == cdata['profile_info']['version']:
+            self.update_profile = False
+        else:
+            self.update_profile = True
+            self.poly.installprofile()
+        LOGGER.info('check_profile: update_profile={}'.format(self.update_profile))
+        cdata['profile_info'] = self.profile_info
+        self.saveCustomData(cdata)
+    
+    def install_profile(self,command):
+        LOGGER.info("install_profile:")
+        self.poly.installprofile()
     
     def delete(self):
         LOGGER.info('Deleting Sense Node Server')
@@ -153,6 +180,7 @@ class SenseDetectedDevice(polyinterface.Node):
         self.nameOrig = name
         self.addressOrig = address
         self.timeout = 5.0
+        self.queryON = True
           
     def start(self):
         self.query()                                   
