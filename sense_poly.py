@@ -91,9 +91,7 @@ class Controller(polyinterface.Controller):
         try:
             self.sense.update_realtime()
             self.sense.update_trend_data()
-            
-            
-            
+                   
             self.setDriver('ST', 1)
             self.setDriver('CPW', int(self.sense.active_power) if self.sense.active_power != None else 0 )
             self.setDriver('GV6', int(self.sense.active_solar_power) if self.sense.active_solar_power != None else 0 ) 
@@ -197,6 +195,7 @@ class SenseDetectedDevice(polyinterface.Node):
     def __init__(self, controller, primary, address, name):
         super(SenseDetectedDevice, self).__init__(controller, primary, address.lower(), name)
         self.nameOrig = name
+        self.addressOrig = address
         self.timeout = 5.0
         self.queryON = True
           
