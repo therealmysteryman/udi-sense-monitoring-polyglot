@@ -69,19 +69,41 @@ class Controller(polyinterface.Controller):
         self.discover()
         
     def shortPoll(self):
+        if self.discovery_thread is not None:
+            if self.discovery_thread.is_alive():
+                LOGGER.debug('Skipping shortPoll() while discovery in progress...')
+                return
+            else:
+                self.discovery_thread = None
+        self.query()
+
+    def longPoll(self):
+        if self.discovery_thread is not None:
+            if self.discovery_thread.is_alive():
+                LOGGER.debug('Skipping longPoll() while discovery in progress...')
+                return
+            else:
+                self.discovery_thread = None
+        self.heartbeat()
+        self.connectSense()
+        
+    def query(self) :
         try:
             self.sense.update_realtime()
             self.sense.update_trend_data()
-            self.setDriver('ST', 1, True)
-            self.setDriver('CPW', str(int(self.sense.active_power)), True)
-            self.setDriver('GV6', str(int(self.sense.active_solar_power)), True)
-            self.setDriver('GV7', str(int(self.sense.daily_usage)), True)
-            self.setDriver('GV8', str(int(self.sense.daily_production)), True)
-            self.setDriver('GV9', str(int(self.sense.weekly_usage)), True)
-            self.setDriver('GV10', str(int(self.sense.weekly_production)), True)
-            self.setDriver('GV11', str(int(self.sense.monthly_usage)), True)
-            self.setDriver('GV12', str(int(self.sense.monthly_production)), True)
-            self.setDriver('GV13', str(int(self.sense.yearly_usage)), True)
+            
+            
+            
+            self.setDriver('ST', 1)
+            self.setDriver('CPW', int(self.sense.active_power) if self.sense.active_power != None else 0 )
+            self.setDriver('GV6', int(self.sense.active_solar_power) if self.sense.active_solar_power != None else 0 ) 
+            self.setDriver('GV7', int(self.sense.daily_usage) if self.sense.daily_usage != None else 0 )  
+            self.setDriver('GV8', int(self.sense.daily_production) if self.sense.daily_production != None else 0 )
+            self.setDriver('GV9', int(self.sense.weekly_usage) if self.sense.weekly_usage != None else 0 )
+            self.setDriver('GV10', int(self.sense.weekly_production) if self.sense.weekly_production != None else 0 )
+            self.setDriver('GV11', int(self.sense.monthly_usage) if self.sense.monthly_usage != None else 0 )
+            self.setDriver('GV12', int(self.sense.monthly_production) if self.sense.monthly_production != None else 0 )
+            self.setDriver('GV13', int(self.sense.yearly_usage) if self.sense.yearly_usage != None else 0 )
             self.reportDrivers()
         except Exception as ex:
             LOGGER.error('query, unable to retrieve Sense Monitor usage: %s', str(ex))
@@ -89,10 +111,6 @@ class Controller(polyinterface.Controller):
         for node in self.nodes:
             if  self.nodes[node].queryON == True :
                 self.nodes[node].query()
-
-    def longPoll(self):
-        self.connectSense()
-        self.heartbeat()
     
     def heartbeat(self):
         self.l_info('heartbeat','hb={}'.format(self.hb))
@@ -179,7 +197,6 @@ class SenseDetectedDevice(polyinterface.Node):
     def __init__(self, controller, primary, address, name):
         super(SenseDetectedDevice, self).__init__(controller, primary, address.lower(), name)
         self.nameOrig = name
-        self.addressOrig = address
         self.timeout = 5.0
         self.queryON = True
           
