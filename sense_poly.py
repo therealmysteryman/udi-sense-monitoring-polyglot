@@ -85,8 +85,11 @@ class Controller(polyinterface.Controller):
             else:
                 self.discovery_thread = None
         self.heartbeat()
-        self.connectSense()
         
+        # Reconnect (Timeout api 3600 secondes)
+        self.sense = None
+        self.connectSense()
+         
     def query(self) :
         try:
             self.sense.update_realtime()
@@ -142,7 +145,7 @@ class Controller(polyinterface.Controller):
         for device in  self.sense.get_discovered_device_data():
             if device is not None: 
                 try :
-                    if device['tags']['Revoked'] == 'false':
+                    if device['tags']['Revoked'] == 'false' and device['name'] != 'Solar' :
                         self.addNode(SenseDetectedDevice(self, self.address, device['id'], device['name']))                     
                 except Exception as ex: 
                     LOGGER.error('discover device name: %s', str(device['name']))
@@ -200,31 +203,34 @@ class SenseDetectedDevice(polyinterface.Node):
         self.queryON = True
           
     def start(self):
+        self.setDriver('GV1', 0)
+        self.setDriver('GV5', 0)
+        self.setDriver('GV2', 0)
+        self.setDriver('GV3', 0)
+        self.setDriver('GV4', 0)
+        
         self.query()                                   
         
     def query(self):
         try :
             # Device Power Status
-            self.setDriver('ST', 0,True)
+            val = 0
             for x in self.parent.sense.active_devices:
                 if x == self.nameOrig:
-                    self.setDriver('ST', 100, True)
-
+                    val = 100
+                    break
+            self.setDriver('ST',val)
+                    
             # Device Info
             deviceInfo = self.parent.sense.get_device_info(self.addressOrig)
             if deviceInfo is not None:
                     if 'usage' in deviceInfo : 
-                        self.setDriver('GV1', int(deviceInfo['usage']['avg_monthly_runs']),True)
-                        self.setDriver('GV5', int(deviceInfo['usage']['avg_watts']),True)
-                        self.setDriver('GV2', int(deviceInfo['usage']['avg_monthly_KWH']),True)
-                        self.setDriver('GV3', int(deviceInfo['usage']['current_month_runs']),True)
-                        self.setDriver('GV4', int(deviceInfo['usage']['current_month_KWH']),True)
-                    else :
-                        self.setDriver('GV1',0,True)
-                        self.setDriver('GV5',0,True)
-                        self.setDriver('GV2',0,True)
-                        self.setDriver('GV3',0,True)
-                        self.setDriver('GV4',0,True)            
+                        self.setDriver('GV1', int(deviceInfo['usage']['avg_monthly_runs']))
+                        self.setDriver('GV5', int(deviceInfo['usage']['avg_watts']))
+                        self.setDriver('GV2', int(deviceInfo['usage']['avg_monthly_KWH']))
+                        self.setDriver('GV3', int(deviceInfo['usage']['current_month_runs']))
+                        self.setDriver('GV4', int(deviceInfo['usage']['current_month_KWH']))
+    
             self.reportDrivers()
         except Exception as ex:
             LOGGER.error('updateDevice: %s', str(ex))
