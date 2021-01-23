@@ -145,9 +145,11 @@ class Controller(polyinterface.Controller):
         for device in  self.sense.get_discovered_device_data():
             if device is not None: 
                 try :
+                    self.sense.update_realtime()
                     deviceInfo = sense.get_device_info(device['id'])
-                    if deviceInfo["tags"]["DeviceListAllowed"] == "true" :
-                        self.addNode(SenseDetectedDevice(self, self.address, device['id'], device['name']))                    
+                    if deviceInfo is not None : 
+                        if deviceInfo["tags"]["DeviceListAllowed"] == "true" :
+                            self.addNode(SenseDetectedDevice(self, self.address, device['id'], device['name']))                    
                 except Exception as ex: 
                     LOGGER.error('discover device name: %s', str(device['name']))
     
