@@ -229,7 +229,7 @@ class SenseDetectedDevice(polyinterface.Node):
         except Exception as ex:
             LOGGER.error('updateDevice: %s', str(ex))
 
-        self.reportDrivers()
+        #self.reportDrivers()
             
     drivers = [{'driver': 'ST', 'value': 0, 'uom': 78},
                {'driver': 'GV5', 'value': 0, 'uom': 73}, 
