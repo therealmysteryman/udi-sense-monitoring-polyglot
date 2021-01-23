@@ -213,11 +213,11 @@ class SenseDetectedDevice(polyinterface.Node):
     def query(self):
         try :
             # Device Power Status
-            #val = 0
-            #for x in self.parent.sense.active_devices:
-            #    if x == self.nameOrig:
-            #        val = 100
-            #        break
+            val = 0
+            for x in self.parent.sense.active_devices:
+                if x == self.nameOrig:
+                    val = 100
+                    break
             self.setDriver('ST',val)
                     
             # Device Info
