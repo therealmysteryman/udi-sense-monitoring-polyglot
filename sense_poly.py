@@ -48,14 +48,12 @@ class Controller(polyinterface.Controller):
         try:
             if 'email' in self.polyConfig['customParams'] and self.email is None:
                 self.email = self.polyConfig['customParams']['email']
-                LOGGER.info('Custom Email address specified: {}'.format(self.email))
             else:
                 LOGGER.error('Please provide email address in custom parameters')
                 return False
             
             if 'password' in self.polyConfig['customParams'] and self.password is None:
                 self.password = self.polyConfig['customParams']['password']
-                LOGGER.info('Password specified')
             else:
                 LOGGER.error('Please provide password in custom parameters')
                 return False
@@ -215,11 +213,11 @@ class SenseDetectedDevice(polyinterface.Node):
     def query(self):
         try :
             # Device Power Status
-            val = 0
-            for x in self.parent.sense.active_devices:
-                if x == self.nameOrig:
-                    val = 100
-                    break
+            #val = 0
+            #for x in self.parent.sense.active_devices:
+            #    if x == self.nameOrig:
+            #        val = 100
+            #        break
             self.setDriver('ST',val)
                     
             # Device Info
