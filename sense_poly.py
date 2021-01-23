@@ -64,6 +64,7 @@ class Controller(polyinterface.Controller):
             LOGGER.error('Error starting Sense NodeServer: %s', str(ex))
             return False
         
+        self.connectSense()
         self.check_profile()
         self.heartbeat()
         self.discover()
@@ -88,12 +89,12 @@ class Controller(polyinterface.Controller):
         
         # Reconnect (Timeout api 3600 secondes)
         self.sense.authenticate(self.email,self.password)  
-        #self.sense.update_trend_data()
          
     def query(self) :
+        self.sense.update_realtime()
+        self.sense.update_trend_data()
+        
         try:
-            self.sense.update_realtime()
-
             self.setDriver('ST', 1)
             self.setDriver('CPW', int(self.sense.active_power) if self.sense.active_power != None else 0 )
             self.setDriver('GV6', int(self.sense.active_solar_power) if self.sense.active_solar_power != None else 0 ) 
@@ -103,11 +104,11 @@ class Controller(polyinterface.Controller):
             self.setDriver('GV10', int(self.sense.weekly_production) if self.sense.weekly_production != None else 0 )
             self.setDriver('GV11', int(self.sense.monthly_usage) if self.sense.monthly_usage != None else 0 )
             self.setDriver('GV12', int(self.sense.monthly_production) if self.sense.monthly_production != None else 0 )
-            self.setDriver('GV13', int(self.sense.yearly_usage) if self.sense.yearly_usage != None else 0 )
-            self.reportDrivers()
-            
+            self.setDriver('GV13', int(self.sense.yearly_usage) if self.sense.yearly_usage != None else 0 )  
         except Exception as ex:
             LOGGER.error('query, unable to retrieve Sense Monitor usage: %s', str(ex))
+        
+        self.reportDrivers()
         
         for node in self.nodes:
             if  self.nodes[node].queryON == True :
@@ -128,7 +129,9 @@ class Controller(polyinterface.Controller):
     def connectSense(self):
         try:
             self.sense = Senseable()
-            self.sense.authenticate(self.email,self.password)            
+            self.sense.authenticate(self.email,self.password)   
+            self.sense.update_realtime()
+            self.sense.update_trend_data()
         except Exception as ex:
             LOGGER.error('Unable to connect to Sense API: %s', str(ex))
     
@@ -141,15 +144,11 @@ class Controller(polyinterface.Controller):
         self.discovery_thread.start()
     
     def _discovery_process(self):
-        self.connectSense()
-        for device in  self.sense.get_discovered_device_data():
+        for device in self.sense.get_discovered_device_data():
             if device is not None: 
                 try :
-                    self.sense.update_realtime()
-                    deviceInfo = sense.get_device_info(device['id'])
-                    if deviceInfo is not None : 
-                        if deviceInfo["tags"]["DeviceListAllowed"] == True :
-                            self.addNode(SenseDetectedDevice(self, self.address, device['id'], device['name']))                    
+                    if device["tags"]["DeviceListAllowed"] == "true" :
+                        self.addNode(SenseDetectedDevice(self, self.address, device['id'], device['name']))                    
                 except Exception as ex: 
                     LOGGER.error('discover device name: %s', str(device['name']))
     
@@ -232,11 +231,11 @@ class SenseDetectedDevice(polyinterface.Node):
                         self.setDriver('GV2', int(deviceInfo['usage']['avg_monthly_KWH']))
                         self.setDriver('GV3', int(deviceInfo['usage']['current_month_runs']))
                         self.setDriver('GV4', int(deviceInfo['usage']['current_month_KWH']))
-    
-            self.reportDrivers()
         except Exception as ex:
             LOGGER.error('updateDevice: %s', str(ex))
 
+        self.reportDrivers()
+            
     drivers = [{'driver': 'ST', 'value': 0, 'uom': 78},
                {'driver': 'GV5', 'value': 0, 'uom': 73}, 
                {'driver': 'GV1', 'value': 0, 'uom': 25}, 
