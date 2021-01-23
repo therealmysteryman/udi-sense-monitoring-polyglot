@@ -107,9 +107,7 @@ class Controller(polyinterface.Controller):
         for node in self.nodes:
             if  self.nodes[node].queryON == True :
                 self.nodes[node].query()
-                
-        self.reportDrivers()
-    
+
     def heartbeat(self):
         self.l_info('heartbeat','hb={}'.format(self.hb))
         if self.hb == 0:
