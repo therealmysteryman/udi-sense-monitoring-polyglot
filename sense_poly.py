@@ -83,7 +83,6 @@ class Controller(polyinterface.Controller):
                 self.discovery_thread = None
         self.heartbeat()
         
-        
         # Reconnect (Timeout api 3600 secondes)
         self.sense.authenticate(self.email,self.password)  
          
@@ -105,11 +104,11 @@ class Controller(polyinterface.Controller):
         except Exception as ex:
             LOGGER.error('query, unable to retrieve Sense Monitor usage: %s', str(ex))
         
-        self.reportDrivers()
-        
         for node in self.nodes:
             if  self.nodes[node].queryON == True :
                 self.nodes[node].query()
+                
+        self.reportDrivers()
     
     def heartbeat(self):
         self.l_info('heartbeat','hb={}'.format(self.hb))
