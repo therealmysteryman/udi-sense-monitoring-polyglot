@@ -87,10 +87,8 @@ class Controller(polyinterface.Controller):
         self.heartbeat()
         
         # Reconnect (Timeout api 3600 secondes)
-        self.sense = None
-        self.connectSense()
-        self.sense.update_realtime()
-        self.sense.update_trend_data()
+        self.sense.authenticate(self.email,self.password)  
+        #self.sense.update_trend_data()
          
     def query(self) :
         try:
@@ -107,6 +105,7 @@ class Controller(polyinterface.Controller):
             self.setDriver('GV12', int(self.sense.monthly_production) if self.sense.monthly_production != None else 0 )
             self.setDriver('GV13', int(self.sense.yearly_usage) if self.sense.yearly_usage != None else 0 )
             self.reportDrivers()
+            
         except Exception as ex:
             LOGGER.error('query, unable to retrieve Sense Monitor usage: %s', str(ex))
         
@@ -146,8 +145,9 @@ class Controller(polyinterface.Controller):
         for device in  self.sense.get_discovered_device_data():
             if device is not None: 
                 try :
-                    if device["tags"]["DeviceListAllowed"] == "true" and device['name'] != 'Solar'  :
-                        self.addNode(SenseDetectedDevice(self, self.address, device['id'], device['name']))                     
+                    deviceInfo = sense.get_device_info(device['id'])
+                    if deviceInfo["tags"]["DeviceListAllowed"] == "true" :
+                        self.addNode(SenseDetectedDevice(self, self.address, device['id'], device['name']))                    
                 except Exception as ex: 
                     LOGGER.error('discover device name: %s', str(device['name']))
     
