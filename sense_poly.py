@@ -34,12 +34,10 @@ class Controller(polyinterface.Controller):
     def __init__(self, polyglot):
         super(Controller, self).__init__(polyglot)
         self.name = 'Sense'
-        self.tries = 0
         self.email = None
         self.password = None
         self.sense = None
         self.discovery_thread = None
-        self.initialized = False
         self.hb = 0
         self.queryON = False
         
@@ -58,14 +56,14 @@ class Controller(polyinterface.Controller):
                 LOGGER.error('Please provide password in custom parameters')
                 return False
             
+        self.check_profile()
+        self.heartbeat()
+        self.connectSense()
+        self.discover()
+            
         except Exception as ex:
             LOGGER.error('Error starting Sense NodeServer: %s', str(ex))
             return False
-        
-        self.connectSense()
-        self.check_profile()
-        self.heartbeat()
-        self.discover()
         
     def shortPoll(self):
         if self.discovery_thread is not None:
@@ -89,20 +87,20 @@ class Controller(polyinterface.Controller):
         self.sense.authenticate(self.email,self.password)  
          
     def query(self) :
-        #self.sense.update_realtime()
-        #self.sense.update_trend_data()
+        self.sense.update_realtime()
+        self.sense.update_trend_data()
         
         try:
             self.setDriver('ST', 1)
-        #    self.setDriver('CPW', int(self.sense.active_power) if self.sense.active_power != None else 0 )
-        #    self.setDriver('GV6', int(self.sense.active_solar_power) if self.sense.active_solar_power != None else 0 ) 
-        #    self.setDriver('GV7', int(self.sense.daily_usage) if self.sense.daily_usage != None else 0 )  
-        #    self.setDriver('GV8', int(self.sense.daily_production) if self.sense.daily_production != None else 0 )
-        #    self.setDriver('GV9', int(self.sense.weekly_usage) if self.sense.weekly_usage != None else 0 )
-        #    self.setDriver('GV10', int(self.sense.weekly_production) if self.sense.weekly_production != None else 0 )
-        #    self.setDriver('GV11', int(self.sense.monthly_usage) if self.sense.monthly_usage != None else 0 )
-        #    self.setDriver('GV12', int(self.sense.monthly_production) if self.sense.monthly_production != None else 0 )
-        #    self.setDriver('GV13', int(self.sense.yearly_usage) if self.sense.yearly_usage != None else 0 )  
+            self.setDriver('CPW', int(self.sense.active_power) if self.sense.active_power != None else 0 )
+            self.setDriver('GV6', int(self.sense.active_solar_power) if self.sense.active_solar_power != None else 0 ) 
+            self.setDriver('GV7', int(self.sense.daily_usage) if self.sense.daily_usage != None else 0 )  
+            self.setDriver('GV8', int(self.sense.daily_production) if self.sense.daily_production != None else 0 )
+            self.setDriver('GV9', int(self.sense.weekly_usage) if self.sense.weekly_usage != None else 0 )
+            self.setDriver('GV10', int(self.sense.weekly_production) if self.sense.weekly_production != None else 0 )
+            self.setDriver('GV11', int(self.sense.monthly_usage) if self.sense.monthly_usage != None else 0 )
+            self.setDriver('GV12', int(self.sense.monthly_production) if self.sense.monthly_production != None else 0 )
+            self.setDriver('GV13', int(self.sense.yearly_usage) if self.sense.yearly_usage != None else 0 )  
         except Exception as ex:
             LOGGER.error('query, unable to retrieve Sense Monitor usage: %s', str(ex))
         
@@ -128,8 +126,6 @@ class Controller(polyinterface.Controller):
         try:
             self.sense = Senseable()
             self.sense.authenticate(self.email,self.password)   
-            #self.sense.update_realtime()
-            #self.sense.update_trend_data()
         except Exception as ex:
             LOGGER.error('Unable to connect to Sense API: %s', str(ex))
     
@@ -197,28 +193,28 @@ class SenseDetectedDevice(polyinterface.Node):
 
     def __init__(self, controller, primary, address, name):
         super(SenseDetectedDevice, self).__init__(controller, primary, address.lower(), name)
+        self.queryON = True
         self.nameOrig = name
         self.addressOrig = address
-        self.queryON = True
-          
-    def start(self):
+        
         self.setDriver('GV1', 0)
-        self.setDriver('GV5', 0)
         self.setDriver('GV2', 0)
         self.setDriver('GV3', 0)
         self.setDriver('GV4', 0)
-        
-        self.query()                                   
-        
+        self.setDriver('GV5', 0)
+          
+    def start(self):
+        pass
+  
     def query(self):
         try :
             # Device Power Status
-            #val = 0
-            #for x in self.parent.sense.active_devices:
-            #    if x == self.nameOrig:
-            #        val = 100
-            #        break
-            #self.setDriver('ST',val)
+            val = 0
+            for x in self.parent.sense.active_devices:
+                if x == self.nameOrig:
+                    val = 100
+                    break
+            self.setDriver('ST',val)
                     
             # Device Info
             deviceInfo = self.parent.sense.get_device_info(self.addressOrig)
