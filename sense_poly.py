@@ -56,10 +56,10 @@ class Controller(polyinterface.Controller):
                 LOGGER.error('Please provide password in custom parameters')
                 return False
             
-        self.check_profile()
-        self.heartbeat()
-        self.connectSense()
-        self.discover()
+            self.check_profile()
+            self.heartbeat()
+            self.connectSense()
+            self.discover()
             
         except Exception as ex:
             LOGGER.error('Error starting Sense NodeServer: %s', str(ex))
