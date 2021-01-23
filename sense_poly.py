@@ -83,6 +83,7 @@ class Controller(polyinterface.Controller):
                 self.discovery_thread = None
         self.heartbeat()
         
+        
         # Reconnect (Timeout api 3600 secondes)
         self.sense.authenticate(self.email,self.password)  
          
@@ -104,7 +105,7 @@ class Controller(polyinterface.Controller):
         except Exception as ex:
             LOGGER.error('query, unable to retrieve Sense Monitor usage: %s', str(ex))
         
-        self.reportDrivers()
+        #self.reportDrivers()
         
         for node in self.nodes:
             if  self.nodes[node].queryON == True :
@@ -141,7 +142,7 @@ class Controller(polyinterface.Controller):
         for device in self.sense.get_discovered_device_data():
             if device is not None: 
                 try :
-                    if device["tags"]["DeviceListAllowed"] == "true" :
+                    if device["tags"]["DeviceListAllowed"] == "true" and device['name'] != "Always On" :
                         self.addNode(SenseDetectedDevice(self, self.address, device['id'], device['name']))                    
                 except Exception as ex: 
                     LOGGER.error('discover device name: %s', str(device['name']))
