@@ -89,12 +89,13 @@ class Controller(polyinterface.Controller):
         # Reconnect (Timeout api 3600 secondes)
         self.sense = None
         self.connectSense()
+        self.sense.update_realtime()
+        self.sense.update_trend_data()
          
     def query(self) :
         try:
             self.sense.update_realtime()
-            self.sense.update_trend_data()
-                   
+
             self.setDriver('ST', 1)
             self.setDriver('CPW', int(self.sense.active_power) if self.sense.active_power != None else 0 )
             self.setDriver('GV6', int(self.sense.active_solar_power) if self.sense.active_solar_power != None else 0 ) 
@@ -145,7 +146,7 @@ class Controller(polyinterface.Controller):
         for device in  self.sense.get_discovered_device_data():
             if device is not None: 
                 try :
-                    if device['tags']['Revoked'] == 'false' and device['name'] != 'Solar' :
+                    if device["tags"]["DeviceListAllowed"] == "true" and device['name'] != 'Solar'  :
                         self.addNode(SenseDetectedDevice(self, self.address, device['id'], device['name']))                     
                 except Exception as ex: 
                     LOGGER.error('discover device name: %s', str(device['name']))
@@ -199,7 +200,6 @@ class SenseDetectedDevice(polyinterface.Node):
         super(SenseDetectedDevice, self).__init__(controller, primary, address.lower(), name)
         self.nameOrig = name
         self.addressOrig = address
-        self.timeout = 5.0
         self.queryON = True
           
     def start(self):
