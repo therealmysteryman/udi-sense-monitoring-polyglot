@@ -105,7 +105,7 @@ class Controller(polyinterface.Controller):
         except Exception as ex:
             LOGGER.error('query, unable to retrieve Sense Monitor usage: %s', str(ex))
         
-        self.reportDriver()
+        self.reportDrivers()
         
         for node in self.nodes:
             if  self.nodes[node].queryON == True :
@@ -228,8 +228,6 @@ class SenseDetectedDevice(polyinterface.Node):
                         self.setDriver('GV4', int(deviceInfo['usage']['current_month_KWH']))
         except Exception as ex:
             LOGGER.error('updateDevice: %s', str(ex))
-
-        self.reportDriver()
             
     drivers = [{'driver': 'ST', 'value': 0, 'uom': 78},
                {'driver': 'GV5', 'value': 0, 'uom': 73}, 
