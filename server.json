@@ -4,8 +4,8 @@
     "type": "python3",
     "executable": "sense_poly.py",
     "install": "install.sh",
-    "shortPoll": "90",
-    "longPoll": "3600",
+    "shortPoll": "60",
+    "longPoll": "600",
     "description": "Connect Sense Energy Monitor to UDI ISY 994i.",
     "notice": "https://github.com/therealmysteryman/udi-sense-monitoring-polyglot/blob/master/LICENSE",
     "credits": [
