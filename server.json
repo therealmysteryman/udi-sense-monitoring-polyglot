@@ -28,8 +28,8 @@
 	{
             "title": "Sense Energy Monitor API Interface [WIP]",
             "author": "scottbonline",
-            "version": "0.7.0",
-            "date": "Mar 5, 2019",
+            "version": "0.8.1",
+            "date": "October 21, 2020",
             "source": "https://github.com/scottbonline/sense",
             "license": "https://github.com/scottbonline/sense/blob/stable/LICENSE.txt"
         }
