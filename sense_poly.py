@@ -72,7 +72,7 @@ class Controller(polyinterface.Controller):
                 return
             else:
                 self.discovery_thread = None
-        self.query()
+        self.update()
 
     def longPoll(self):
         if self.discovery_thread is not None:
@@ -83,8 +83,12 @@ class Controller(polyinterface.Controller):
                 self.discovery_thread = None
         self.heartbeat()
         self.sense.authenticate(self.email,self.password)
-       
-    def query(self) :       
+    
+    def query(self):
+        for node in self.nodes:
+            self.nodes[node].reportDrivers()
+            
+    def update(self) :       
         try:
             self.sense.update_realtime()
             self.sense.update_trend_data()
@@ -104,7 +108,7 @@ class Controller(polyinterface.Controller):
         
         for node in self.nodes:
             if  self.nodes[node].queryON == True :
-                self.nodes[node].query()
+                self.nodes[node].update()
 
     def heartbeat(self):
         self.l_info('heartbeat','hb={}'.format(self.hb))
@@ -170,7 +174,7 @@ class Controller(polyinterface.Controller):
         
     id = 'controller'
     commands = {
-                    'QUERY': shortPoll,
+                    'QUERY': query,
                     'DISCOVERY' : runDiscover
                 }
     drivers = [{'driver': 'ST', 'value': 1, 'uom': 2},
@@ -203,6 +207,9 @@ class SenseDetectedDevice(polyinterface.Node):
         pass
   
     def query(self):
+        self.reportDrivers()
+
+    def update(self):
         try :
             # Device Power Status
             val = 0
