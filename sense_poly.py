@@ -82,14 +82,12 @@ class Controller(polyinterface.Controller):
             else:
                 self.discovery_thread = None
         self.heartbeat()
-        
-        # Reconnect (Timeout api 3600 secondes)
-        self.sense.authenticate(self.email,self.password)  
-         
+       
     def query(self) :
+        self.sense.authenticate(self.email,self.password)    
         self.sense.update_realtime()
         self.sense.update_trend_data()
-        
+      
         try:
             self.setDriver('ST', 1)
             self.setDriver('CPW', int(self.sense.active_power) if self.sense.active_power != None else 0 )
