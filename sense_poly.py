@@ -82,13 +82,13 @@ class Controller(polyinterface.Controller):
             else:
                 self.discovery_thread = None
         self.heartbeat()
-        self.connectSense()
+        self.sense.authenticate(self.email,self.password)
        
-    def query(self) : 
-        self.sense.update_realtime()
-        self.sense.update_trend_data()
-      
+    def query(self) :       
         try:
+            self.sense.update_realtime()
+            self.sense.update_trend_data()
+            
             self.setDriver('ST', 1)
             self.setDriver('CPW', int(self.sense.active_power) if self.sense.active_power != None else 0 )
             self.setDriver('GV6', int(self.sense.active_solar_power) if self.sense.active_solar_power != None else 0 ) 
