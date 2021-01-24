@@ -82,9 +82,9 @@ class Controller(polyinterface.Controller):
             else:
                 self.discovery_thread = None
         self.heartbeat()
+        self.connectSense()
        
-    def query(self) :
-        self.sense.authenticate(self.email,self.password)    
+    def query(self) : 
         self.sense.update_realtime()
         self.sense.update_trend_data()
       
