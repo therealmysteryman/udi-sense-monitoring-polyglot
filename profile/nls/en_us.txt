@@ -16,7 +16,7 @@ ST-ctl-GV10-NAME = Weekly Production
 ST-ctl-GV11-NAME = Monthly Usage
 ST-ctl-GV12-NAME = Monthly Production
 ST-ctl-GV13-NAME = Yearly Usage
-ST-ctl-GV14-NAME = Yeayly Production
+ST-ctl-GV14-NAME = Yearly Production
 
 ST-DEVICE-ST-NAME = State
 ST-DEVICE-GV1-NAME = Average Montly Runs
