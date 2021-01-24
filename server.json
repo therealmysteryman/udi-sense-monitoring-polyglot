@@ -12,7 +12,7 @@
         {
             "title": "sense_poly: A Polyglot v2 interface to Sense Energy Monitor ",
             "author": "AutomationGeek",
-            "version": "2.2.4",
+            "version": "2.2.5",
             "date": "January 23, 2021",
             "source": "https://github.com/therealmysteryman/udi-sense-monitoring-polyglot",
             "license": "https://github.com/therealmysteryman/udi-sense-monitoring-polyglot/blob/master/LICENSE"
