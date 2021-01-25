@@ -66,24 +66,30 @@ class Controller(polyinterface.Controller):
             return False
         
     def shortPoll(self):
-        if self.discovery_thread is not None:
-            if self.discovery_thread.is_alive():
-                LOGGER.debug('Skipping shortPoll() while discovery in progress...')
-                return
-            else:
-                self.discovery_thread = None
-        self.update()
-
+        try :
+            if self.discovery_thread is not None:
+                if self.discovery_thread.is_alive():
+                    LOGGER.debug('Skipping shortPoll() while discovery in progress...')
+                    return
+                else:
+                    self.discovery_thread = None
+            self.update()
+        except Exception as ex:
+            LOGGER.error('Error shortPoll: %s', str(ex))
+            
     def longPoll(self):
-        if self.discovery_thread is not None:
-            if self.discovery_thread.is_alive():
-                LOGGER.debug('Skipping longPoll() while discovery in progress...')
-                return
-            else:
-                self.discovery_thread = None
-        self.heartbeat()
-        self.sense.authenticate(self.email,self.password)
-    
+        try :
+            if self.discovery_thread is not None:
+                if self.discovery_thread.is_alive():
+                    LOGGER.debug('Skipping longPoll() while discovery in progress...')
+                    return
+                else:
+                    self.discovery_thread = None
+            self.connectSense()
+            self.heartbeat()
+        except Exception as ex:
+            LOGGER.error('Error longPoll: %s', str(ex))
+        
     def query(self):
         for node in self.nodes:
             self.nodes[node].reportDrivers()
