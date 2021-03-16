@@ -198,7 +198,8 @@ class Controller(polyinterface.Controller):
 class SenseDetectedDevice(polyinterface.Node):
 
     def __init__(self, controller, primary, address, name):
-        super(SenseDetectedDevice, self).__init__(controller, primary, address.lower(), name)
+        newaddr = address.lower().replace('dcm','').replace('-','')
+        super(SenseDetectedDevice, self).__init__(controller, primary,newaddr, name)
         self.queryON = True
         self.nameOrig = name
         self.addressOrig = address
