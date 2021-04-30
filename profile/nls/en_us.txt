@@ -24,6 +24,7 @@ ST-DEVICE-GV2-NAME = Average Montly kWh
 ST-DEVICE-GV3-NAME = Monthly Runs
 ST-DEVICE-GV4-NAME = Montly kWh
 ST-DEVICE-GV5-NAME = Average W
+ST-DEVICE-GV15-NAME = Current W
 
 CMD-QUERY-NAME = Query
 CMD-DISCOVERY-NAME = Discover
