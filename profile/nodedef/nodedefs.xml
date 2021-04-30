@@ -27,7 +27,6 @@
     <nodeDef id="SENSEDEVICE" nodeType="139" nls="DEVICE">
         <sts>
             <st id="ST" editor="MONOFF" />
-            <st id="GV15" editor="MWATT"/> 
             <st id="GV1" editor="MINT" /> 
             <st id="GV5" editor="MWATT" /> 
             <st id="GV2" editor="MKWATT" /> 
