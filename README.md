@@ -1,3 +1,6 @@
+
+## This nodeserver has been converted to run on PG3. The code has been moved to https://github.com/UniversalDevicesInc-PG3/udi-sense-monitoring-polyglot
+
 # Sense Monitoring Polyglot V2 Node Server
 
 ![Build Status](https://travis-ci.org/therealmysteryman/udi-sense-monitoring-polyglot.svg?branch=master)
